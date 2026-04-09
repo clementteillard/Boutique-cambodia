@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1a1a1a">
+<title>Maison — Boutique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Khmer:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        display: ['Fraunces', 'serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        khmer: ['Noto Sans Khmer', 'sans-serif'],
+      },
+      colors: {
+        cream: '#faf7f2',
+        ink: '#1a1a1a',
+        clay: '#c2410c',
+        sand: '#e7e2d8',
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { -webkit-tap-highlight-color: transparent; }
+  html, body { background: #faf7f2; color: #1a1a1a; font-family: 'Inter', sans-serif; overscroll-behavior: none; }
+  .font-display { font-family: 'Fraunces', serif; font-optical-sizing: auto; }
+  .khmer { font-family: 'Noto Sans Khmer', sans-serif; }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  .fade-in { animation: fadeIn .4s ease-out; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .slide-up { animation: slideUp .35s cubic-bezier(.16,1,.3,1); }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .grain::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+    opacity: .04; mix-blend-mode: multiply;
+  }
+  input, textarea, select { font-family: inherit; }
+  .heart-pop { animation: heartPop .4s ease-out; }
+  @keyframes heartPop { 0%{transform:scale(1)} 50%{transform:scale(1.4)} 100%{transform:scale(1)} }
+</style>
+</head>
+<body class="grain">
+
+<div id="root"></div>
+
+<script type="text/babel-standalone">/* boot */</script>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel" data-presets="env,react">
+const { useState, useEffect, useMemo, useRef, createContext, useContext } = React;
+
+/* ============ TRANSLATIONS ============ */
+const T = {
+  fr: {
+    shop: 'Boutique', search: 'Recherche', favorites: 'Favoris', cart: 'Panier',
+    all: 'Tout', women: 'Femme', men: 'Homme', accessories: 'Accessoires',
+    addCart: 'Ajouter au panier', sizes: 'Tailles', size: 'Taille', color: 'Couleur',
+    description: 'Description', empty: 'Vide', emptyCart: 'Votre panier est vide',
+    emptyFav: 'Aucun favori pour l\'instant', total: 'Total', checkout: 'Commander',
+    quantity: 'Qté', remove: 'Retirer', searchPlaceholder: 'Rechercher un article...',
+    noResults: 'Aucun résultat', filters: 'Filtres', priceRange: 'Prix',
+    sortBy: 'Trier par', newest: 'Nouveautés', priceLow: 'Prix croissant', priceHigh: 'Prix décroissant',
+    admin: 'Admin', addProduct: 'Ajouter un produit', editProduct: 'Modifier',
+    name: 'Nom', price: 'Prix', category: 'Catégorie', image: 'Image (URL)',
+    save: 'Enregistrer', cancel: 'Annuler', delete: 'Supprimer', login: 'Connexion',
+    password: 'Mot de passe', adminAccess: 'Accès admin',
+    orderVia: 'Commander via', whatsapp: 'WhatsApp', telegram: 'Telegram',
+    payLocal: 'Paiement local', payCard: 'Carte bancaire', orderSummary: 'Résumé',
+    yourName: 'Votre nom', phone: 'Téléphone', address: 'Adresse', notes: 'Notes',
+    sendOrder: 'Envoyer la commande', orderSent: 'Commande envoyée !',
+    new: 'Nouveau', soldOut: 'Épuisé', discover: 'Découvrir',
+    welcome: 'Bienvenue', tagline: 'Mode contemporaine, livraison Cambodge',
+    selectLang: 'Choisissez votre langue', continue: 'Continuer',
+    backToShop: 'Retour boutique', subtotal: 'Sous-total', delivery: 'Livraison', free: 'Offerte',
+  },
+  en: {
+    shop: 'Shop', search: 'Search', favorites: 'Favorites', cart: 'Cart',
+    all: 'All', women: 'Women', men: 'Men', accessories: 'Accessories',
+    addCart: 'Add to cart', sizes: 'Sizes', size: 'Size', color: 'Color',
+    description: 'Description', empty: 'Empty', emptyCart: 'Your cart is empty',
+    emptyFav: 'No favorites yet', total: 'Total', checkout: 'Checkout',
+    quantity: 'Qty', remove: 'Remove', searchPlaceholder: 'Search items...',
+    noResults: 'No results', filters: 'Filters', priceRange: 'Price',
+    sortBy: 'Sort by', newest: 'Newest', priceLow: 'Price low to high', priceHigh: 'Price high to low',
+    admin: 'Admin', addProduct: 'Add product', editProduct: 'Edit',
+    name: 'Name', price: 'Price', category: 'Category', image: 'Image (URL)',
+    save: 'Save', cancel: 'Cancel', delete: 'Delete', login: 'Login',
+    password: 'Password', adminAccess: 'Admin access',
+    orderVia: 'Order via', whatsapp: 'WhatsApp', telegram: 'Telegram',
+    payLocal: 'Local payment', payCard: 'Card', orderSummary: 'Summary',
+    yourName: 'Your name', phone: 'Phone', address: 'Address', notes: 'Notes',
+    sendOrder: 'Send order', orderSent: 'Order sent!',
+    new: 'New', soldOut: 'Sold out', discover: 'Discover',
+    welcome: 'Welcome', tagline: 'Contemporary fashion, Cambodia delivery',
+    selectLang: 'Choose your language', continue: 'Continue',
+    backToShop: 'Back to shop', subtotal: 'Subtotal', delivery: 'Delivery', free: 'Free',
+  },
+  km: {
+    shop: 'ហាង', search: 'ស្វែងរក', favorites: 'ចូលចិត្ត', cart: 'កន្ត្រក',
+    all: 'ទាំងអស់', women: 'នារី', men: 'បុរស', accessories: 'គ្រឿងបន្សំ',
+    addCart: 'បន្ថែមទៅកន្ត្រក', sizes: 'ទំហំ', size: 'ទំហំ', color: 'ពណ៌',
+    description: 'ការពិពណ៌នា', empty: 'ទទេ', emptyCart: 'កន្ត្រករបស់អ្នកទទេ',
+    emptyFav: 'មិនទាន់មានចំណូលចិត្ត', total: 'សរុប', checkout: 'បញ្ជាទិញ',
+    quantity: 'ចំនួន', remove: 'យកចេញ', searchPlaceholder: 'ស្វែងរកទំនិញ...',
+    noResults: 'គ្មានលទ្ធផល', filters: 'តម្រង', priceRange: 'តម្លៃ',
+    sortBy: 'តម្រៀបតាម', newest: 'ថ្មីបំផុត', priceLow: 'តម្លៃតិចទៅច្រើន', priceHigh: 'តម្លៃច្រើនទៅតិច',
+    admin: 'អ្នកគ្រប់គ្រង', addProduct: 'បន្ថែមផលិតផល', editProduct: 'កែប្រែ',
+    name: 'ឈ្មោះ', price: 'តម្លៃ', category: 'ប្រភេទ', image: 'រូបភាព (URL)',
+    save: 'រក្សាទុក', cancel: 'បោះបង់', delete: 'លុប', login: 'ចូល',
+    password: 'ពាក្យសម្ងាត់', adminAccess: 'ការចូលរបស់អ្នកគ្រប់គ្រង',
+    orderVia: 'បញ្ជាទិញតាម', whatsapp: 'WhatsApp', telegram: 'Telegram',
+    payLocal: 'ការទូទាត់ក្នុងស្រុក', payCard: 'កាត', orderSummary: 'សង្ខេប',
+    yourName: 'ឈ្មោះរបស់អ្នក', phone: 'ទូរស័ព្ទ', address: 'អាសយដ្ឋាន', notes: 'កំណត់ចំណាំ',
+    sendOrder: 'ផ្ញើការបញ្ជាទិញ', orderSent: 'បានផ្ញើការបញ្ជាទិញ!',
+    new: 'ថ្មី', soldOut: 'អស់', discover: 'ស្វែងយល់',
+    welcome: 'សូមស្វាគមន៍', tagline: 'ម៉ូដសហសម័យ ដឹកជញ្ជូននៅកម្ពុជា',
+    selectLang: 'ជ្រើសរើសភាសា', continue: 'បន្ត',
+    backToShop: 'ត្រឡប់ទៅហាង', subtotal: 'សរុបរង', delivery: 'ដឹកជញ្ជូន', free: 'ឥតគិតថ្លៃ',
+  }
+};
+
+/* ============ STORE (localStorage) ============ */
+const STORAGE_KEY = 'maison_store_v1';
+const defaultProducts = [
+  { id: 1, name: 'Linen Dress', nameKm: 'រ៉ូបក្រណាត់', price: 45, category: 'women', image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600', sizes: ['S','M','L'], description: 'Soft linen, perfect for the tropics.', isNew: true },
+  { id: 2, name: 'Cotton Shirt', nameKm: 'អាវកប្បាស', price: 32, category: 'men', image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600', sizes: ['S','M','L','XL'], description: 'Breathable cotton, oversized fit.', isNew: false },
+  { id: 3, name: 'Silk Scarf', nameKm: 'កន្សែងសូត្រ', price: 28, category: 'accessories', image: 'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=600', sizes: ['One Size'], description: 'Hand-woven Cambodian silk.', isNew: true },
+  { id: 4, name: 'Wide Trousers', nameKm: 'ខោធំទូលាយ', price: 55, category: 'women', image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600', sizes: ['S','M','L'], description: 'Flowing silhouette, high waist.', isNew: false },
+  { id: 5, name: 'Leather Bag', nameKm: 'កាបូបស្បែក', price: 78, category: 'accessories', image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600', sizes: ['One Size'], description: 'Vegetable-tanned leather.', isNew: true },
+  { id: 6, name: 'Knit Sweater', nameKm: 'អាវត្បាញ', price: 62, category: 'men', image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600', sizes: ['M','L','XL'], description: 'Soft wool blend.', isNew: false },
+];
+
+const loadStore = () => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return { products: defaultProducts, cart: [], favorites: [], language: null, splashDone: false };
+};
+const saveStore = (data) => {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+};
+
+/* ============ APP CONTEXT ============ */
+const AppContext = createContext(null);
+const useApp = () => useContext(AppContext);
+
+const AppProvider = ({ children }) => {
+  const initial = loadStore();
+  const [products, setProducts] = useState(initial.products);
+  const [cart, setCart] = useState(initial.cart || []);
+  const [favorites, setFavorites] = useState(initial.favorites || []);
+  const [language, setLanguage] = useState(initial.language);
+  const [splashDone, setSplashDone] = useState(initial.splashDone || false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    saveStore({ products, cart, favorites, language, splashDone });
+  }, [products, cart, favorites, language, splashDone]);
+
+  const t = (key) => (T[language] || T.fr)[key] || key;
+
+  const addToCart = (product, size) => {
+    setCart(prev => {
+      const existing = prev.find(i => i.id === product.id && i.size === size);
+      if (existing) return prev.map(i => i === existing ? {...i, qty: i.qty + 1} : i);
+      return [...prev, { ...product, size, qty: 1 }];
+    });
+  };
+  const updateQty = (id, size, delta) => {
+    setCart(prev => prev.map(i => (i.id === id && i.size === size) ? {...i, qty: Math.max(0, i.qty + delta)} : i).filter(i => i.qty > 0));
+  };
+  const removeFromCart = (id, size) => setCart(prev => prev.filter(i => !(i.id === id && i.size === size)));
+  const toggleFav = (id) => setFavorites(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+  const clearCart = () => setCart([]);
+
+  return (
+    <AppContext.Provider value={{
+      products, setProducts, cart, addToCart, updateQty, removeFromCart, clearCart,
+      favorites, toggleFav, language, setLanguage, splashDone, setSplashDone,
+      isAdmin, setIsAdmin, t
+    }}>
+      {children}
+    </AppContext.Provider>
+  );
+};
+
+/* ============ ICONS ============ */
+const Icon = ({ name, className = "w-6 h-6", filled = false }) => {
+  const icons = {
+    home: <path d="M3 12L12 4l9 8M5 10v10h14V10" />,
+    search: <><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></>,
+    heart: filled ? <path fill="currentColor" d="M12 21s-7-4.5-9.5-9C.5 8 3 4 7 4c2 0 3.5 1 5 3 1.5-2 3-3 5-3 4 0 6.5 4 4.5 8C19 16.5 12 21 12 21z"/> : <path d="M12 21s-7-4.5-9.5-9C.5 8 3 4 7 4c2 0 3.5 1 5 3 1.5-2 3-3 5-3 4 0 6.5 4 4.5 8C19 16.5 12 21 12 21z"/>,
+    bag: <><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7V5a3 3 0 016 0v2"/></>,
+    arrow_left: <path d="M15 18l-6-6 6-6"/>,
+    plus: <path d="M12 5v14M5 12h14"/>,
+    minus: <path d="M5 12h14"/>,
+    x: <path d="M18 6L6 18M6 6l12 12"/>,
+    settings: <><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/></>,
+    edit: <><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></>,
+    trash: <><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></>,
+    sliders: <><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></>,
+  };
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      {icons[name]}
+    </svg>
+  );
+};
+
+/* ============ SPLASH ============ */
+const Splash = () => {
+  const { setSplashDone } = useApp();
+  useEffect(() => {
+    const t = setTimeout(() => setSplashDone(true), 2000);
+    return () => clearTimeout(t);
+  }, []);
+  return (
+    <div className="fixed inset-0 bg-ink text-cream flex flex-col items-center justify-center z-50">
+      <div className="fade-in text-center">
+        <div className="font-display text-6xl font-light italic tracking-tight mb-2">Maison</div>
+        <div className="w-12 h-px bg-cream/40 mx-auto mb-4"></div>
+        <div className="text-xs uppercase tracking-[0.3em] opacity-60">Phnom Penh</div>
+      </div>
+    </div>
+  );
+};
+
+/* ============ LANGUAGE SELECT ============ */
+const LangSelect = () => {
+  const { setLanguage, t } = useApp();
+  const langs = [
+    { code: 'fr', label: 'Français', sub: 'France' },
+    { code: 'en', label: 'English', sub: 'International' },
+    { code: 'km', label: 'ខ្មែរ', sub: 'កម្ពុជា', font: 'khmer' },
+  ];
+  return (
+    <div className="min-h-screen bg-cream flex flex-col items-center justify-center px-6 fade-in">
+      <div className="text-center mb-12">
+        <div className="font-display text-5xl italic font-light mb-3">Maison</div>
+        <div className="text-sm text-ink/60 uppercase tracking-widest">Choose your language</div>
+      </div>
+      <div className="w-full max-w-sm space-y-3">
+        {langs.map(l => (
+          <button key={l.code} onClick={() => setLanguage(l.code)}
+            className="w-full bg-white border border-ink/10 rounded-2xl p-5 flex items-center justify-between hover:border-ink hover:bg-ink hover:text-cream transition-all group">
+            <div className="text-left">
+              <div className={`text-xl font-medium ${l.font || ''}`}>{l.label}</div>
+              <div className="text-xs opacity-60 uppercase tracking-wider">{l.sub}</div>
+            </div>
+            <Icon name="arrow_left" className="w-5 h-5 rotate-180 opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+/* ============ PRODUCT CARD ============ */
+const ProductCard = ({ product, onClick }) => {
+  const { favorites, toggleFav, t, language } = useApp();
+  const isFav = favorites.includes(product.id);
+  const [popping, setPopping] = useState(false);
+  const handleFav = (e) => {
+    e.stopPropagation();
+    toggleFav(product.id);
+    setPopping(true);
+    setTimeout(() => setPopping(false), 400);
+  };
+  const displayName = language === 'km' && product.nameKm ? product.nameKm : product.name;
+  return (
+    <div onClick={onClick} className="cursor-pointer group fade-in">
+      <div className="relative aspect-[3/4] bg-sand rounded-xl overflow-hidden mb-3">
+        <img src={product.image} alt={displayName} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+        {product.isNew && (
+          <div className="absolute top-3 left-3 bg-cream px-2 py-1 text-[10px] uppercase tracking-wider font-medium">{t('new')}</div>
+        )}
+        <button onClick={handleFav} className={`absolute top-3 right-3 w-9 h-9 bg-cream/90 backdrop-blur rounded-full flex items-center justify-center ${popping ? 'heart-pop' : ''}`}>
+          <Icon name="heart" className="w-4 h-4" filled={isFav} />
+        </button>
+      </div>
+      <div className="px-1">
+        <div className={`text-sm font-medium leading-tight ${language === 'km' ? 'khmer' : ''}`}>{displayName}</div>
+        <div className="text-sm text-ink/60 mt-0.5">${product.price}</div>
+      </div>
+    </div>
+  );
+};
+
+/* ============ HEADER ============ */
+const Header = ({ onAdminClick }) => {
+  const { isAdmin } = useApp();
+  return (
+    <div className="px-5 pt-12 pb-4 flex items-center justify-between">
+      <div>
+        <div className="font-display text-3xl italic font-light leading-none">Maison</div>
+        <div className="text-[10px] uppercase tracking-[0.2em] text-ink/50 mt-1">Phnom Penh ◦ EST 2024</div>
+      </div>
+      <button onClick={onAdminClick} className="w-10 h-10 rounded-full border border-ink/10 flex items-center justify-center hover:bg-ink hover:text-cream transition-colors">
+        <Icon name="settings" className="w-4 h-4" />
+      </button>
+    </div>
+  );
+};
+
+/* ============ SHOP VIEW ============ */
+const ShopView = ({ onSelectProduct, onAdminClick }) => {
+  const { products, t, language } = useApp();
+  const [category, setCategory] = useState('all');
+  const cats = ['all', 'women', 'men', 'accessories'];
+  const filtered = category === 'all' ? products : products.filter(p => p.category === category);
+  return (
+    <div className="pb-24">
+      <Header onAdminClick={onAdminClick} />
+      <div className="px-5 pb-6">
+        <div className="font-display text-4xl leading-tight">
+          <span className="italic font-light">{t('discover')}</span><br/>
+          <span className="font-medium">the collection.</span>
+        </div>
+      </div>
+      <div className="flex gap-2 px-5 overflow-x-auto scrollbar-hide pb-4">
+        {cats.map(c => (
+          <button key={c} onClick={() => setCategory(c)}
+            className={`px-4 py-2 rounded-full text-xs uppercase tracking-wider whitespace-nowrap transition-all ${category === c ? 'bg-ink text-cream' : 'bg-white border border-ink/10 text-ink/70'}`}>
+            {t(c)}
+          </button>
+        ))}
+      </div>
+      <div className="grid grid-cols-2 gap-4 px-5">
+        {filtered.map(p => <ProductCard key={p.id} product={p} onClick={() => onSelectProduct(p)} />)}
+      </div>
+    </div>
+  );
+};
+
+/* ============ SEARCH VIEW ============ */
+const SearchView = ({ onSelectProduct }) => {
+  const { products, t } = useApp();
+  const [query, setQuery] = useState('');
+  const [sort, setSort] = useState('newest');
+  const [showFilters, setShowFilters] = useState(false);
+  const [maxPrice, setMaxPrice] = useState(200);
+
+  const results = useMemo(() => {
+    let r = products.filter(p =>
+      p.name.toLowerCase().includes(query.toLowerCase()) && p.price <= maxPrice
+    );
+    if (sort === 'priceLow') r = [...r].sort((a,b) => a.price - b.price);
+    if (sort === 'priceHigh') r = [...r].sort((a,b) => b.price - a.price);
+    if (sort === 'newest') r = [...r].sort((a,b) => (b.isNew?1:0) - (a.isNew?1:0));
+    return r;
+  }, [products, query, sort, maxPrice]);
+
+  return (
+    <div className="pb-24">
+      <div className="px-5 pt-12 pb-4">
+        <div className="font-display text-3xl italic mb-4">{t('search')}</div>
+        <div className="flex gap-2">
+          <div className="flex-1 relative">
+            <Icon name="search" className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-ink/40" />
+            <input value={query} onChange={e=>setQuery(e.target.value)} placeholder={t('searchPlaceholder')}
+              className="w-full bg-white border border-ink/10 rounded-full pl-11 pr-4 py-3 text-sm outline-none focus:border-ink" />
+          </div>
+          <button onClick={()=>setShowFilters(!showFilters)} className="w-12 h-12 rounded-full bg-white border border-ink/10 flex items-center justify-center">
+            <Icon name="sliders" className="w-4 h-4" />
+          </button>
+        </div>
+        {showFilters && (
+          <div className="mt-4 bg-white border border-ink/10 rounded-2xl p-4 fade-in">
+            <div className="text-xs uppercase tracking-wider text-ink/50 mb-2">{t('priceRange')}: $0 - ${maxPrice}</div>
+            <input type="range" min="10" max="200" value={maxPrice} onChange={e=>setMaxPrice(+e.target.value)} className="w-full accent-ink" />
+            <div className="text-xs uppercase tracking-wider text-ink/50 mt-4 mb-2">{t('sortBy')}</div>
+            <div className="flex gap-2 flex-wrap">
+              {['newest','priceLow','priceHigh'].map(s => (
+                <button key={s} onClick={()=>setSort(s)} className={`px-3 py-1.5 rounded-full text-xs ${sort===s?'bg-ink text-cream':'bg-sand'}`}>{t(s)}</button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="grid grid-cols-2 gap-4 px-5">
+        {results.length === 0 ? (
+          <div className="col-span-2 text-center py-16 text-ink/40">{t('noResults')}</div>
+        ) : results.map(p => <ProductCard key={p.id} product={p} onClick={()=>onSelectProduct(p)} />)}
+      </div>
+    </div>
+  );
+};
+
+/* ============ FAVORITES ============ */
+const FavView = ({ onSelectProduct }) => {
+  const { products, favorites, t } = useApp();
+  const favs = products.filter(p => favorites.includes(p.id));
+  return (
+    <div className="pb-24">
+      <div className="px-5 pt-12 pb-6">
+        <div className="font-display text-3xl italic">{t('favorites')}</div>
+      </div>
+      {favs.length === 0 ? (
+        <div className="text-center py-20 px-8">
+          <Icon name="heart" className="w-12 h-12 mx-auto text-ink/20 mb-4" />
+          <div className="text-ink/50">{t('emptyFav')}</div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 gap-4 px-5">
+          {favs.map(p => <ProductCard key={p.id} product={p} onClick={()=>onSelectProduct(p)} />)}
+        </div>
+      )}
+    </div>
+  );
+};
+
+/* ============ CART ============ */
+const CartView = ({ onCheckout }) => {
+  const { cart, updateQty, removeFromCart, t } = useApp();
+  const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  return (
+    <div className="pb-24">
+      <div className="px-5 pt-12 pb-6">
+        <div className="font-display text-3xl italic">{t('cart')}</div>
+      </div>
+      {cart.length === 0 ? (
+        <div className="text-center py-20 px-8">
+          <Icon name="bag" className="w-12 h-12 mx-auto text-ink/20 mb-4" />
+          <div className="text-ink/50">{t('emptyCart')}</div>
+        </div>
+      ) : (
+        <>
+          <div className="px-5 space-y-3">
+            {cart.map(item => (
+              <div key={`${item.id}-${item.size}`} className="bg-white rounded-2xl p-3 flex gap-3 fade-in">
+                <img src={item.image} className="w-20 h-24 object-cover rounded-xl" />
+                <div className="flex-1 flex flex-col justify-between">
+                  <div>
+                    <div className="text-sm font-medium">{item.name}</div>
+                    <div className="text-xs text-ink/50 mt-0.5">{t('size')}: {item.size}</div>
+                    <div className="text-sm font-medium mt-1">${item.price * item.qty}</div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3 bg-sand rounded-full px-1">
+                      <button onClick={()=>updateQty(item.id, item.size, -1)} className="w-7 h-7 flex items-center justify-center"><Icon name="minus" className="w-3 h-3"/></button>
+                      <span className="text-xs font-medium w-4 text-center">{item.qty}</span>
+                      <button onClick={()=>updateQty(item.id, item.size, 1)} className="w-7 h-7 flex items-center justify-center"><Icon name="plus" className="w-3 h-3"/></button>
+                    </div>
+                    <button onClick={()=>removeFromCart(item.id, item.size)} className="text-ink/40"><Icon name="trash" className="w-4 h-4"/></button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="px-5 mt-6 space-y-2 text-sm">
+            <div className="flex justify-between text-ink/60"><span>{t('subtotal')}</span><span>${subtotal}</span></div>
+            <div className="flex justify-between text-ink/60"><span>{t('delivery')}</span><span>{t('free')}</span></div>
+            <div className="flex justify-between text-lg font-medium pt-2 border-t border-ink/10"><span>{t('total')}</span><span>${subtotal}</span></div>
+          </div>
+          <div className="px-5 mt-6">
+            <button onClick={onCheckout} className="w-full bg-ink text-cream py-4 rounded-full text-sm uppercase tracking-widest font-medium">
+              {t('checkout')}
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+/* ============ PRODUCT DETAIL ============ */
+const ProductDetail = ({ product, onBack }) => {
+  const { addToCart, favorites, toggleFav, t, language } = useApp();
+  const [size, setSize] = useState(product.sizes[0]);
+  const [added, setAdded] = useState(false);
+  const isFav = favorites.includes(product.id);
+  const displayName = language === 'km' && product.nameKm ? product.nameKm : product.name;
+
+  const handleAdd = () => {
+    addToCart(product, size);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
+  };
+
+  return (
+    <div className="min-h-screen bg-cream pb-32 fade-in">
+      <div className="relative aspect-[3/4] bg-sand">
+        <img src={product.image} className="w-full h-full object-cover" />
+        <button onClick={onBack} className="absolute top-12 left-5 w-10 h-10 bg-cream/90 backdrop-blur rounded-full flex items-center justify-center">
+          <Icon name="arrow_left" className="w-4 h-4" />
+        </button>
+        <button onClick={()=>toggleFav(product.id)} className="absolute top-12 right-5 w-10 h-10 bg-cream/90 backdrop-blur rounded-full flex items-center justify-center">
+          <Icon name="heart" className="w-4 h-4" filled={isFav}/>
+        </button>
+      </div>
+      <div className="px-6 pt-6">
+        {product.isNew && <div className="inline-block text-[10px] uppercase tracking-wider bg-ink text-cream px-2 py-1 mb-3">{t('new')}</div>}
+        <div className={`font-display text-3xl italic font-light ${language === 'km' ? 'khmer' : ''}`}>{displayName}</div>
+        <div className="text-2xl font-display mt-1">${product.price}</div>
+        <div className="w-12 h-px bg-ink/20 my-5"></div>
+        <div className="text-sm text-ink/70 leading-relaxed">{product.description}</div>
+        <div className="mt-6">
+          <div className="text-xs uppercase tracking-widest text-ink/50 mb-3">{t('size')}</div>
+          <div className="flex gap-2 flex-wrap">
+            {product.sizes.map(s => (
+              <button key={s} onClick={()=>setSize(s)}
+                className={`min-w-[48px] h-12 px-4 rounded-full text-sm border transition-all ${size===s?'bg-ink text-cream border-ink':'bg-white border-ink/15'}`}>
+                {s}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="fixed bottom-0 left-0 right-0 bg-cream/95 backdrop-blur border-t border-ink/10 p-5">
+        <button onClick={handleAdd}
+          className={`w-full py-4 rounded-full text-sm uppercase tracking-widest font-medium transition-all ${added ? 'bg-green-700 text-white' : 'bg-ink text-cream'}`}>
+          {added ? '✓ ' + t('addCart') : t('addCart')}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+/* ============ CHECKOUT ============ */
+const Checkout = ({ onBack }) => {
+  const { cart, clearCart, t } = useApp();
+  const [method, setMethod] = useState('whatsapp');
+  const [form, setForm] = useState({ name: '', phone: '', address: '', notes: '' });
+  const [sent, setSent] = useState(false);
+  const total = cart.reduce((s,i) => s + i.price * i.qty, 0);
+
+  const handleSend = () => {
+    const orderText = `Order from ${form.name}%0A%0A${cart.map(i => `${i.name} (${i.size}) x${i.qty} - $${i.price*i.qty}`).join('%0A')}%0A%0ATotal: $${total}%0APhone: ${form.phone}%0AAddress: ${form.address}%0ANotes: ${form.notes}`;
+    if (method === 'whatsapp') {
+      window.open(`https://wa.me/855000000000?text=${orderText}`, '_blank');
+    } else if (method === 'telegram') {
+      window.open(`https://t.me/your_username?text=${orderText}`, '_blank');
+    } else if (method === 'local') {
+      alert('KHQR / ABA / Wing payment instructions would appear here');
+    } else {
+      alert('Stripe checkout would open here');
+    }
+    setSent(true);
+    setTimeout(() => { clearCart(); onBack(); }, 2000);
+  };
+
+  if (sent) return (
+    <div className="min-h-screen bg-cream flex flex-col items-center justify-center fade-in">
+      <div className="w-20 h-20 rounded-full bg-ink text-cream flex items-center justify-center text-3xl mb-4">✓</div>
+      <div className="font-display text-2xl italic">{t('orderSent')}</div>
+    </div>
+  );
+
+  const methods = [
+    { id: 'whatsapp', label: 'WhatsApp', icon: '💬' },
+    { id: 'telegram', label: 'Telegram', icon: '✈️' },
+    { id: 'local', label: t('payLocal'), icon: '🏦' },
+    { id: 'card', label: t('payCard'), icon: '💳' },
+  ];
+
+  return (
+    <div className="min-h-screen bg-cream pb-32 fade-in">
+      <div className="px-5 pt-12 pb-4 flex items-center gap-3">
+        <button onClick={onBack} className="w-10 h-10 rounded-full bg-white border border-ink/10 flex items-center justify-center">
+          <Icon name="arrow_left" className="w-4 h-4"/>
+        </button>
+        <div className="font-display text-2xl italic">{t('checkout')}</div>
+      </div>
+      <div className="px-5 space-y-4">
+        <div className="bg-white rounded-2xl p-4">
+          <div className="text-xs uppercase tracking-widest text-ink/50 mb-3">{t('orderSummary')}</div>
+          {cart.map(i => (
+            <div key={`${i.id}-${i.size}`} className="flex justify-between text-sm py-1">
+              <span>{i.name} × {i.qty}</span>
+              <span>${i.price * i.qty}</span>
+            </div>
+          ))}
+          <div className="border-t border-ink/10 mt-2 pt-2 flex justify-between font-medium">
+            <span>{t('total')}</span><span>${total}</span>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-2xl p-4 space-y-3">
+          <input value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder={t('yourName')} className="w-full bg-sand rounded-xl px-4 py-3 text-sm outline-none"/>
+          <input value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})} placeholder={t('phone')} className="w-full bg-sand rounded-xl px-4 py-3 text-sm outline-none"/>
+          <input value={form.address} onChange={e=>setForm({...form,address:e.target.value})} placeholder={t('address')} className="w-full bg-sand rounded-xl px-4 py-3 text-sm outline-none"/>
+          <textarea value={form.notes} onChange={e=>setForm({...form,notes:e.target.value})} placeholder={t('notes')} rows="2" className="w-full bg-sand rounded-xl px-4 py-3 text-sm outline-none resize-none"/>
+        </div>
+
+        <div>
+          <div className="text-xs uppercase tracking-widest text-ink/50 mb-2 px-2">{t('orderVia')}</div>
+          <div className="grid grid-cols-2 gap-2">
+            {methods.map(m => (
+              <button key={m.id} onClick={()=>setMethod(m.id)}
+                className={`p-4 rounded-2xl border text-left transition-all ${method===m.id?'bg-ink text-cream border-ink':'bg-white border-ink/10'}`}>
+                <div className="text-2xl mb-1">{m.icon}</div>
+                <div className="text-xs font-medium">{m.label}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="fixed bottom-0 left-0 right-0 bg-cream/95 backdrop-blur border-t border-ink/10 p-5">
+        <button onClick={handleSend} disabled={!form.name || !form.phone}
+          className="w-full bg-ink text-cream py-4 rounded-full text-sm uppercase tracking-widest font-medium disabled:opacity-30">
+          {t('sendOrder')}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+/* ============ ADMIN ============ */
+const AdminView = ({ onBack }) => {
+  const { products, setProducts, t, isAdmin, setIsAdmin } = useApp();
+  const [pwd, setPwd] = useState('');
+  const [editing, setEditing] = useState(null);
+  const [form, setForm] = useState({ name: '', nameKm: '', price: '', category: 'women', image: '', sizes: 'S,M,L', description: '', isNew: false });
+
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen bg-cream flex flex-col items-center justify-center px-6 fade-in">
+        <button onClick={onBack} className="absolute top-12 left-5 w-10 h-10 rounded-full bg-white border border-ink/10 flex items-center justify-center">
+          <Icon name="arrow_left" className="w-4 h-4"/>
+        </button>
+        <div className="font-display text-3xl italic mb-2">{t('adminAccess')}</div>
+        <div className="text-xs text-ink/50 uppercase tracking-wider mb-6">Enter password</div>
+        <input type="password" value={pwd} onChange={e=>setPwd(e.target.value)} placeholder={t('password')}
+          className="w-full max-w-xs bg-white border border-ink/10 rounded-full px-5 py-3 text-sm outline-none mb-3"/>
+        <button onClick={()=> { if (pwd === 'admin123') setIsAdmin(true); else alert('Wrong password'); }}
+          className="w-full max-w-xs bg-ink text-cream py-3 rounded-full text-sm uppercase tracking-widest">
+          {t('login')}
+        </button>
+        <div className="text-[10px] text-ink/40 mt-4">Default: admin123</div>
+      </div>
+    );
+  }
+
+  const startEdit = (p) => {
+    setEditing(p.id);
+    setForm({ ...p, sizes: p.sizes.join(',') });
+  };
+  const startNew = () => {
+    setEditing('new');
+    setForm({ name: '', nameKm: '', price: '', category: 'women', image: '', sizes: 'S,M,L', description: '', isNew: true });
+  };
+  const save = () => {
+    const data = { ...form, price: +form.price, sizes: form.sizes.split(',').map(s=>s.trim()) };
+    if (editing === 'new') {
+      setProducts([...products, { ...data, id: Date.now() }]);
+    } else {
+      setProducts(products.map(p => p.id === editing ? { ...data, id: editing } : p));
+    }
+    setEditing(null);
+  };
+  const remove = (id) => {
+    if (confirm('Delete?')) setProducts(products.filter(p => p.id !== id));
+  };
+
+  return (
+    <div className="min-h-screen bg-cream pb-24 fade-in">
+      <div className="px-5 pt-12 pb-4 flex items-center justify-between">
+        <button onClick={onBack} className="w-10 h-10 rounded-full bg-white border border-ink/10 flex items-center justify-center">
+          <Icon name="arrow_left" className="w-4 h-4"/>
+        </button>
+        <div className="font-display text-2xl italic">{t('admin')}</div>
+        <button onClick={startNew} className="w-10 h-10 rounded-full bg-ink text-cream flex items-center justify-center">
+          <Icon name="plus" className="w-4 h-4"/>
+        </button>
+      </div>
+
+      {editing && (
+        <div className="fixed inset-0 bg-black/40 z-50 flex items-end" onClick={()=>setEditing(null)}>
+          <div className="bg-cream w-full rounded-t-3xl p-6 slide-up max-h-[90vh] overflow-y-auto" onClick={e=>e.stopPropagation()}>
+            <div className="font-display text-xl italic mb-4">{editing==='new'?t('addProduct'):t('editProduct')}</div>
+            <div className="space-y-3">
+              <input value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder={t('name')+' (EN/FR)'} className="w-full bg-white rounded-xl px-4 py-3 text-sm border border-ink/10 outline-none"/>
+              <input value={form.nameKm} onChange={e=>setForm({...form,nameKm:e.target.value})} placeholder={t('name')+' (ខ្មែរ)'} className="w-full bg-white rounded-xl px-4 py-3 text-sm border border-ink/10 outline-none khmer"/>
+              <input type="number" value={form.price} onChange={e=>setForm({...form,price:e.target.value})} placeholder={t('price')} className="w-full bg-white rounded-xl px-4 py-3 text-sm border border-ink/10 outline-none"/>
+              <select value={form.category} onChange={e=>setForm({...form,category:e.target.value})} className="w-full bg-white rounded-xl px-4 py-3 text-sm border border-ink/10 outline-none">
+                <option value="women">{t('women')}</option>
+                <option value="men">{t('men')}</option>
+                <option value="accessories">{t('accessories')}</option>
+              </select>
+              <input value={form.image} onChange={e=>setForm({...form,image:e.target.value})} placeholder={t('image')} className="w-full bg-white rounded-xl px-4 py-3 text-sm border border-ink/10 outline-none"/>
+              <input value={form.sizes} onChange={e=>setForm({...form,sizes:e.target.value})} placeholder="S,M,L,XL" className="w-full bg-white rounded-xl px-4 py-3 text-sm border border-ink/10 outline-none"/>
+              <textarea value={form.description} onChange={e=>setForm({...form,description:e.target.value})} placeholder={t('description')} rows="3" className="w-full bg-white rounded-xl px-4 py-3 text-sm border border-ink/10 outline-none resize-none"/>
+              <label className="flex items-center gap-2 text-sm">
+                <input type="checkbox" checked={form.isNew} onChange={e=>setForm({...form,isNew:e.target.checked})}/>
+                {t('new')}
+              </label>
+            </div>
+            <div className="flex gap-2 mt-4">
+              <button onClick={()=>setEditing(null)} className="flex-1 py-3 rounded-full border border-ink/15 text-sm uppercase tracking-wider">{t('cancel')}</button>
+              <button onClick={save} className="flex-1 py-3 rounded-full bg-ink text-cream text-sm uppercase tracking-wider">{t('save')}</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="px-5 space-y-3">
+        {products.map(p => (
+          <div key={p.id} className="bg-white rounded-2xl p-3 flex gap-3 items-center">
+            <img src={p.image} className="w-16 h-20 object-cover rounded-xl"/>
+            <div className="flex-1">
+              <div className="text-sm font-medium">{p.name}</div>
+              <div className="text-xs text-ink/50">${p.price} · {t(p.category)}</div>
+            </div>
+            <button onClick={()=>startEdit(p)} className="w-9 h-9 rounded-full bg-sand flex items-center justify-center"><Icon name="edit" className="w-4 h-4"/></button>
+            <button onClick={()=>remove(p.id)} className="w-9 h-9 rounded-full bg-sand flex items-center justify-center text-clay"><Icon name="trash" className="w-4 h-4"/></button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+/* ============ BOTTOM NAV ============ */
+const BottomNav = ({ active, onChange }) => {
+  const { cart, t } = useApp();
+  const cartCount = cart.reduce((s,i) => s + i.qty, 0);
+  const tabs = [
+    { id: 'shop', icon: 'home', label: t('shop') },
+    { id: 'search', icon: 'search', label: t('search') },
+    { id: 'favorites', icon: 'heart', label: t('favorites') },
+    { id: 'cart', icon: 'bag', label: t('cart'), badge: cartCount },
+  ];
+  return (
+    <div className="fixed bottom-0 left-0 right-0 bg-cream/95 backdrop-blur border-t border-ink/10 z-40">
+      <div className="flex justify-around items-center h-16 max-w-md mx-auto px-2">
+        {tabs.map(t => (
+          <button key={t.id} onClick={()=>onChange(t.id)} className="flex flex-col items-center justify-center gap-0.5 flex-1 relative">
+            <div className="relative">
+              <Icon name={t.icon} className={`w-5 h-5 ${active===t.id?'text-ink':'text-ink/40'}`} filled={active===t.id && t.icon==='heart'}/>
+              {t.badge > 0 && (
+                <div className="absolute -top-1 -right-2 bg-clay text-cream text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-medium">{t.badge}</div>
+              )}
+            </div>
+            <div className={`text-[9px] uppercase tracking-wider ${active===t.id?'text-ink font-medium':'text-ink/40'}`}>{t.label}</div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+/* ============ MAIN ============ */
+const App = () => {
+  const { splashDone, language } = useApp();
+  const [tab, setTab] = useState('shop');
+  const [selected, setSelected] = useState(null);
+  const [checkout, setCheckout] = useState(false);
+  const [admin, setAdmin] = useState(false);
+
+  if (!splashDone) return <Splash />;
+  if (!language) return <LangSelect />;
+  if (admin) return <AdminView onBack={()=>setAdmin(false)} />;
+  if (checkout) return <Checkout onBack={()=>setCheckout(false)} />;
+  if (selected) return <ProductDetail product={selected} onBack={()=>setSelected(null)} />;
+
+  return (
+    <div className="max-w-md mx-auto min-h-screen relative">
+      {tab === 'shop' && <ShopView onSelectProduct={setSelected} onAdminClick={()=>setAdmin(true)} />}
+      {tab === 'search' && <SearchView onSelectProduct={setSelected} />}
+      {tab === 'favorites' && <FavView onSelectProduct={setSelected} />}
+      {tab === 'cart' && <CartView onCheckout={()=>setCheckout(true)} />}
+      <BottomNav active={tab} onChange={setTab} />
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <AppProvider><App /></AppProvider>
+);
+</script>
+</body>
+</html>
