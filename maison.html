@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0a0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Maison — Phnom Penh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+Khmer:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --bg2: #12121a;
+  --bg3: #1a1a25;
+  --glass: rgba(255,255,255,0.04);
+  --glass2: rgba(255,255,255,0.07);
+  --glass3: rgba(255,255,255,0.12);
+  --glassBorder: rgba(255,255,255,0.08);
+  --glassBorder2: rgba(255,255,255,0.14);
+  --text: #f0ece4;
+  --text2: rgba(240,236,228,0.65);
+  --text3: rgba(240,236,228,0.4);
+  --accent: #c9a96e;
+  --accent2: #e8d5a8;
+  --accentGlow: rgba(201,169,110,0.25);
+  --danger: #e85d5d;
+  --success: #5dd492;
+  --radius: 20px;
+  --radiusSm: 14px;
+  --radiusXl: 28px;
+  --font: 'DM Sans', sans-serif;
+  --fontDisplay: 'Playfair Display', Georgia, serif;
+  --fontKhmer: 'Noto Sans Khmer', sans-serif;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+}
+.light {
+  --bg: #f5f2ed;
+  --bg2: #ebe7e0;
+  --bg3: #e0dbd3;
+  --glass: rgba(0,0,0,0.03);
+  --glass2: rgba(0,0,0,0.05);
+  --glass3: rgba(0,0,0,0.08);
+  --glassBorder: rgba(0,0,0,0.07);
+  --glassBorder2: rgba(0,0,0,0.12);
+  --text: #1a1a1a;
+  --text2: rgba(26,26,26,0.65);
+  --text3: rgba(26,26,26,0.4);
+  --accent: #9a7b4f;
+  --accent2: #7a5e35;
+  --accentGlow: rgba(154,123,79,0.2);
+}
+.light .glass-card { background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.4) 100%); }
+.light .glass-card:active { background: linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.6) 100%); }
+.light .glass-input { background: rgba(255,255,255,0.6); }
+.light .glass-btn { color: #fff; }
+.light .splash { background: var(--bg); }
+.light .orb1 { background: radial-gradient(circle, rgba(154,123,79,0.1), transparent 70%); }
+.light .orb2 { background: radial-gradient(circle, rgba(100,80,180,0.06), transparent 70%); }
+.light .splash-shimmer { background: linear-gradient(105deg, transparent 40%, rgba(154,123,79,0.08) 50%, transparent 60%); background-size: 200% 100%; animation: shimmer 2.5s ease-in-out infinite; }
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased; }
+html, body { background: var(--bg); color: var(--text); font-family: var(--font); overflow-x: hidden; overscroll-behavior: none; height: 100%; transition: background .4s ease, color .4s ease; }
+#root { min-height: 100%; }
+.khmer { font-family: var(--fontKhmer); }
+input, textarea, select, button { font-family: inherit; border: none; outline: none; background: none; color: inherit; }
+img { display: block; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ===== GLASS ===== */
+.glass { background: var(--glass); backdrop-filter: blur(40px) saturate(1.3); -webkit-backdrop-filter: blur(40px) saturate(1.3); border: 1px solid var(--glassBorder); }
+.glass2 { background: var(--glass2); backdrop-filter: blur(50px) saturate(1.4); -webkit-backdrop-filter: blur(50px) saturate(1.4); border: 1px solid var(--glassBorder2); }
+.glass3 { background: var(--glass3); backdrop-filter: blur(60px) saturate(1.5); -webkit-backdrop-filter: blur(60px) saturate(1.5); border: 1px solid var(--glassBorder2); }
+.glass-card { background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid var(--glassBorder); transition: all .4s cubic-bezier(.4,0,.2,1); }
+.glass-card:active { transform: scale(0.97); background: linear-gradient(135deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.04) 100%); }
+.glass-input { background: rgba(255,255,255,0.05); border: 1px solid var(--glassBorder); border-radius: 14px; padding: 14px 18px; font-size: 14px; color: var(--text); transition: all .3s; width: 100%; }
+.glass-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accentGlow); }
+.glass-input::placeholder { color: var(--text3); }
+.glass-btn { background: linear-gradient(135deg, var(--accent) 0%, #b8944d 100%); color: #0a0a0f; font-weight: 600; border-radius: 16px; padding: 16px; width: 100%; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: all .35s; position: relative; overflow: hidden; }
+.glass-btn:active { transform: scale(0.97); }
+.glass-btn:disabled { opacity: 0.3; transform: none; }
+.glass-btn-outline { background: var(--glass); border: 1px solid var(--glassBorder2); color: var(--text); font-weight: 500; border-radius: 16px; padding: 14px; width: 100%; font-size: 14px; cursor: pointer; transition: all .35s; }
+.glass-btn-outline:active { background: var(--glass3); transform: scale(0.97); }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes slideDown { from { transform: translateY(-20px); opacity:0; } to { transform: translateY(0); opacity:1; } }
+@keyframes pulse { 0%,100% { opacity:.6; } 50% { opacity:1; } }
+@keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+@keyframes heartPop { 0%{transform:scale(1)} 40%{transform:scale(1.35)} 100%{transform:scale(1)} }
+@keyframes glow { 0%,100%{filter:brightness(1)} 50%{filter:brightness(1.3)} }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+@keyframes logoReveal { 0%{opacity:0;letter-spacing:0.3em;filter:blur(8px)} 60%{opacity:1;filter:blur(0)} 100%{letter-spacing:0.02em} }
+@keyframes lineExpand { from{width:0} to{width:60px} }
+@keyframes subtitleFade { 0%{opacity:0;transform:translateY(8px)} 100%{opacity:0.5;transform:translateY(0)} }
+.fade-up { animation: fadeUp .5s cubic-bezier(.4,0,.2,1) both; }
+.fade-in { animation: fadeIn .4s ease both; }
+.slide-up { animation: slideUp .4s cubic-bezier(.16,1,.3,1); }
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+
+/* ===== AMBIENT ===== */
+.ambient-orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; }
+.orb1 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(201,169,110,0.12), transparent 70%); top: -100px; right: -80px; animation: float 8s ease-in-out infinite; }
+.orb2 { width: 250px; height: 250px; background: radial-gradient(circle, rgba(100,80,180,0.08), transparent 70%); bottom: 100px; left: -60px; animation: float 10s ease-in-out infinite reverse; }
+
+/* ===== SPLASH ===== */
+.splash { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--bg); }
+.splash-logo { font-family: var(--fontDisplay); font-size: 52px; font-weight: 400; font-style: italic; color: var(--accent2); animation: logoReveal 2s cubic-bezier(.4,0,.2,1) both; }
+.splash-line { height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent); margin: 16px auto; animation: lineExpand 1.2s cubic-bezier(.4,0,.2,1) 0.5s both; }
+.splash-sub { font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--text2); animation: subtitleFade 1s ease 1s both; }
+.splash-shimmer { position: absolute; inset: 0; background: linear-gradient(105deg, transparent 40%, rgba(201,169,110,0.06) 50%, transparent 60%); background-size: 200% 100%; animation: shimmer 2.5s ease-in-out infinite; pointer-events: none; }
+.splash-exit { animation: fadeIn .6s ease reverse both; }
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; padding-bottom: var(--safe-b); }
+.bottom-nav-inner { display: flex; justify-content: space-around; align-items: center; height: 64px; max-width: 500px; margin: 0 auto; }
+.nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; position: relative; padding: 8px 0; }
+.nav-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); position: absolute; top: 2px; transition: all .3s; }
+.nav-icon { transition: all .3s; }
+.nav-label { font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; transition: all .3s; }
+
+/* ===== BADGE ===== */
+.badge { position: absolute; top: -2px; right: -8px; min-width: 16px; height: 16px; background: var(--accent); color: var(--bg); font-size: 9px; font-weight: 700; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 0 4px; }
+
+/* ===== PRODUCT GRID ===== */
+.product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 0 16px; }
+.product-card { border-radius: var(--radius); overflow: hidden; cursor: pointer; position: relative; }
+.product-img-wrap { position: relative; aspect-ratio: 3/4; overflow: hidden; border-radius: var(--radius); background: var(--bg3); }
+.product-img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.4,0,.2,1); }
+.product-card:active .product-img { transform: scale(1.05); }
+.product-tag { position: absolute; top: 10px; left: 10px; padding: 4px 10px; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; border-radius: 8px; }
+.fav-btn { position: absolute; top: 10px; right: 10px; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all .3s; }
+.fav-btn:active { transform: scale(0.85); }
+.heart-pop { animation: heartPop .4s ease-out; }
+
+/* ===== MODAL / OVERLAY ===== */
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 60; }
+.modal { position: fixed; bottom: 0; left: 0; right: 0; z-index: 61; max-height: 92vh; overflow-y: auto; border-radius: var(--radiusXl) var(--radiusXl) 0 0; padding: 24px 20px calc(24px + var(--safe-b)); }
+.modal-handle { width: 36px; height: 4px; border-radius: 2px; background: var(--glass3); margin: 0 auto 20px; }
+
+/* ===== CAROUSEL ===== */
+.carousel { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 0; }
+.carousel > * { scroll-snap-align: start; flex-shrink: 0; width: 100%; }
+.carousel-dots { display: flex; gap: 6px; justify-content: center; margin-top: 10px; }
+.carousel-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); transition: all .3s; }
+.carousel-dot.active { background: var(--accent); width: 18px; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+const { useState, useEffect, useMemo, useRef, useCallback, createContext, useContext } = React;
+
+/* ═══════════════════════ TRANSLATIONS ═══════════════════════ */
+const TR = {
+fr: {
+  shop:'Boutique', search:'Recherche', favorites:'Favoris', cart:'Panier', settings:'Réglages',
+  all:'Tout', women:'Femme', men:'Homme', kids:'Enfant', accessories:'Accessoires',
+  addCart:'Ajouter au panier', added:'Ajouté !', size:'Taille', color:'Couleur', colors:'Couleurs',
+  description:'Description', stock:'En stock', outOfStock:'Rupture',
+  emptyCart:'Votre panier est vide', emptyFav:'Aucun favori', noResults:'Aucun résultat',
+  total:'Total', subtotal:'Sous-total', delivery:'Livraison', free:'Offerte', checkout:'Commander',
+  qty:'Qté', remove:'Retirer', searchHint:'Rechercher un article...',
+  filters:'Filtres', priceRange:'Prix', sortBy:'Trier', newest:'Nouveautés', priceLow:'Prix ↑', priceHigh:'Prix ↓',
+  admin:'Admin', addProduct:'Ajouter produit', editProduct:'Modifier', deleteProduct:'Supprimer',
+  name:'Nom', price:'Prix (USD)', category:'Catégorie', images:'Images (URLs, une par ligne)',
+  sizes:'Tailles (S,M,L...)', variants:'Variantes', stockQty:'Quantité stock',
+  save:'Enregistrer', cancel:'Annuler', delete:'Supprimer',
+  login:'Connexion', signup:'Inscription', email:'Email', password:'Mot de passe', confirmPwd:'Confirmer',
+  guest:'Continuer en tant qu\'invité', orLogin:'ou connectez-vous avec', logout:'Déconnexion',
+  loginTitle:'Bienvenue', loginSub:'Connectez-vous pour continuer',
+  profile:'Profil', language:'Langue', currency:'Taux USD/KHR', social:'Réseaux sociaux',
+  telegramBot:'Token Bot Telegram', telegramChat:'Chat ID Telegram', whatsappNum:'Numéro WhatsApp',
+  orderVia:'Envoyer la commande via', whatsapp:'WhatsApp', telegram:'Telegram', messenger:'Messenger',
+  scanQR:'Scanner le QR ABA', uploadProof:'Envoyer preuve de paiement', takePhoto:'Prendre une photo',
+  chooseFile:'Choisir un fichier', proofSent:'Preuve envoyée !',
+  yourName:'Votre nom', phone:'Téléphone', address:'Adresse', notes:'Notes',
+  sendOrder:'Confirmer la commande', orderSent:'Commande envoyée !',
+  newTag:'Nouveau', soldOut:'Épuisé', discover:'Découvrir la collection',
+  welcome:'Maison', tagline:'Mode contemporaine · Phnom Penh',
+  selectLang:'Choisissez votre langue', darkMode:'Mode sombre', exchangeRate:'Taux de change',
+  adminPanel:'Panneau Admin', products:'Produits', orders:'Commandes', config:'Configuration',
+  backToShop:'Retour', paymentMethod:'Mode de paiement', payInfo:'Informations de paiement',
+  qrInstruction:'Scannez ce QR code avec votre app ABA, puis envoyez la preuve de paiement.',
+  or:'ou',
+},
+en: {
+  shop:'Shop', search:'Search', favorites:'Favorites', cart:'Cart', settings:'Settings',
+  all:'All', women:'Women', men:'Men', kids:'Kids', accessories:'Accessories',
+  addCart:'Add to cart', added:'Added!', size:'Size', color:'Color', colors:'Colors',
+  description:'Description', stock:'In stock', outOfStock:'Out of stock',
+  emptyCart:'Your cart is empty', emptyFav:'No favorites yet', noResults:'No results',
+  total:'Total', subtotal:'Subtotal', delivery:'Delivery', free:'Free', checkout:'Checkout',
+  qty:'Qty', remove:'Remove', searchHint:'Search items...',
+  filters:'Filters', priceRange:'Price', sortBy:'Sort', newest:'Newest', priceLow:'Price ↑', priceHigh:'Price ↓',
+  admin:'Admin', addProduct:'Add product', editProduct:'Edit', deleteProduct:'Delete',
+  name:'Name', price:'Price (USD)', category:'Category', images:'Images (URLs, one per line)',
+  sizes:'Sizes (S,M,L...)', variants:'Variants', stockQty:'Stock quantity',
+  save:'Save', cancel:'Cancel', delete:'Delete',
+  login:'Login', signup:'Sign up', email:'Email', password:'Password', confirmPwd:'Confirm',
+  guest:'Continue as guest', orLogin:'or sign in with', logout:'Log out',
+  loginTitle:'Welcome', loginSub:'Sign in to continue',
+  profile:'Profile', language:'Language', currency:'USD/KHR rate', social:'Social accounts',
+  telegramBot:'Telegram Bot Token', telegramChat:'Telegram Chat ID', whatsappNum:'WhatsApp number',
+  orderVia:'Send order via', whatsapp:'WhatsApp', telegram:'Telegram', messenger:'Messenger',
+  scanQR:'Scan ABA QR', uploadProof:'Send payment proof', takePhoto:'Take a photo',
+  chooseFile:'Choose file', proofSent:'Proof sent!',
+  yourName:'Your name', phone:'Phone', address:'Address', notes:'Notes',
+  sendOrder:'Confirm order', orderSent:'Order sent!',
+  newTag:'New', soldOut:'Sold out', discover:'Discover the collection',
+  welcome:'Maison', tagline:'Contemporary fashion · Phnom Penh',
+  selectLang:'Choose your language', darkMode:'Dark mode', exchangeRate:'Exchange rate',
+  adminPanel:'Admin Panel', products:'Products', orders:'Orders', config:'Configuration',
+  backToShop:'Back', paymentMethod:'Payment method', payInfo:'Payment information',
+  qrInstruction:'Scan this QR code with your ABA app, then send the payment proof.',
+  or:'or',
+},
+km: {
+  shop:'ហាង', search:'ស្វែងរក', favorites:'ចូលចិត្ត', cart:'កន្ត្រក', settings:'ការកំណត់',
+  all:'ទាំងអស់', women:'នារី', men:'បុរស', kids:'កុមារ', accessories:'គ្រឿងបន្សំ',
+  addCart:'បន្ថែមទៅកន្ត្រក', added:'បានបន្ថែម!', size:'ទំហំ', color:'ពណ៌', colors:'ពណ៌',
+  description:'ការពិពណ៌នា', stock:'នៅក្នុងស្តុក', outOfStock:'អស់ពីស្តុក',
+  emptyCart:'កន្ត្រករបស់អ្នកទទេ', emptyFav:'មិនទាន់មានចំណូលចិត្ត', noResults:'គ្មានលទ្ធផល',
+  total:'សរុប', subtotal:'សរុបរង', delivery:'ដឹកជញ្ជូន', free:'ឥតគិតថ្លៃ', checkout:'បញ្ជាទិញ',
+  qty:'ចំនួន', remove:'យកចេញ', searchHint:'ស្វែងរកទំនិញ...',
+  filters:'តម្រង', priceRange:'តម្លៃ', sortBy:'តម្រៀប', newest:'ថ្មីបំផុត', priceLow:'តម្លៃ ↑', priceHigh:'តម្លៃ ↓',
+  admin:'អ្នកគ្រប់គ្រង', addProduct:'បន្ថែមផលិតផល', editProduct:'កែប្រែ', deleteProduct:'លុប',
+  name:'ឈ្មោះ', price:'តម្លៃ (USD)', category:'ប្រភេទ', images:'រូបភាព (URLs)',
+  sizes:'ទំហំ (S,M,L...)', variants:'វ៉ារីអង់', stockQty:'ចំនួនស្តុក',
+  save:'រក្សាទុក', cancel:'បោះបង់', delete:'លុប',
+  login:'ចូល', signup:'ចុះឈ្មោះ', email:'អ៊ីមែល', password:'ពាក្យសម្ងាត់', confirmPwd:'បញ្ជាក់',
+  guest:'បន្តជាភ្ញៀវ', orLogin:'ឬចូលដោយ', logout:'ចាកចេញ',
+  loginTitle:'សូមស្វាគមន៍', loginSub:'ចូលដើម្បីបន្ត',
+  profile:'ប្រវត្តិរូប', language:'ភាសា', currency:'អត្រា USD/KHR', social:'បណ្តាញសង្គម',
+  telegramBot:'Telegram Bot Token', telegramChat:'Telegram Chat ID', whatsappNum:'លេខ WhatsApp',
+  orderVia:'ផ្ញើការបញ្ជាទិញតាម', whatsapp:'WhatsApp', telegram:'Telegram', messenger:'Messenger',
+  scanQR:'ស្កេន QR ABA', uploadProof:'ផ្ញើភស្តុតាង', takePhoto:'ថតរូប',
+  chooseFile:'ជ្រើសឯកសារ', proofSent:'បានផ្ញើភស្តុតាង!',
+  yourName:'ឈ្មោះ', phone:'ទូរស័ព្ទ', address:'អាសយដ្ឋាន', notes:'កំណត់ចំណាំ',
+  sendOrder:'បញ្ជាក់ការបញ្ជាទិញ', orderSent:'បានផ្ញើការបញ្ជាទិញ!',
+  newTag:'ថ្មី', soldOut:'អស់', discover:'រកមើលបណ្តុំ',
+  welcome:'Maison', tagline:'ម៉ូដសហសម័យ · ភ្នំពេញ',
+  selectLang:'ជ្រើសរើសភាសា', darkMode:'ទម្រង់ងងឹត', exchangeRate:'អត្រាប្តូរប្រាក់',
+  adminPanel:'ផ្ទាំងគ្រប់គ្រង', products:'ផលិតផល', orders:'ការបញ្ជាទិញ', config:'កំណត់រចនាសម្ព័ន្ធ',
+  backToShop:'ត្រឡប់', paymentMethod:'វិធីទូទាត់', payInfo:'ព័ត៌មានទូទាត់',
+  qrInstruction:'ស្កេន QR នេះជាមួយកម្មវិធី ABA បន្ទាប់មកផ្ញើភស្តុតាងនៃការទូទាត់។',
+  or:'ឬ',
+}
+};
+
+/* ═══════════════════════ DEFAULT DATA ═══════════════════════ */
+const defaultProducts = [
+  { id:1, name:'Linen Wrap Dress', nameKm:'រ៉ូបក្រណាត់', price:45, category:'women', images:['https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600','https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=600'], sizes:['S','M','L'], colors:['Ivory','Sand'], stock:12, description:'Soft organic linen, perfect for tropical days.', isNew:true },
+  { id:2, name:'Oversized Cotton Shirt', nameKm:'អាវកប្បាសធំ', price:32, category:'men', images:['https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600'], sizes:['S','M','L','XL'], colors:['White','Black'], stock:20, description:'Breathable cotton, relaxed oversized fit.', isNew:false },
+  { id:3, name:'Cambodian Silk Scarf', nameKm:'កន្សែងសូត្រខ្មែរ', price:28, category:'accessories', images:['https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=600','https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600'], sizes:['One Size'], colors:['Gold','Rose'], stock:8, description:'Hand-woven Cambodian silk, traditional patterns.', isNew:true },
+  { id:4, name:'Wide Palazzo Trousers', nameKm:'ខោធំទូលាយ', price:55, category:'women', images:['https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600'], sizes:['S','M','L'], colors:['Cream','Charcoal'], stock:15, description:'Flowing high-waist silhouette.', isNew:false },
+  { id:5, name:'Artisan Leather Bag', nameKm:'កាបូបស្បែក', price:78, category:'accessories', images:['https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600','https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600'], sizes:['One Size'], colors:['Cognac','Black'], stock:5, description:'Vegetable-tanned leather, handcrafted.', isNew:true },
+  { id:6, name:'Merino Knit Sweater', nameKm:'អាវត្បាញ', price:62, category:'men', images:['https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600'], sizes:['M','L','XL'], colors:['Oat','Navy'], stock:10, description:'Premium merino wool, lightweight warmth.', isNew:false },
+];
+
+const defaultConfig = { exchangeRate: 4100, telegramBot: '', telegramChatId: '', whatsappNumber: '', adminPassword: 'admin123' };
+
+/* ═══════════════════════ STORE ═══════════════════════ */
+const STORE_KEY = 'maison_v2';
+const loadData = () => { try { const d = JSON.parse(localStorage.getItem(STORE_KEY)); if(d) return d; } catch(e){} return null; };
+const saveData = (d) => { try { localStorage.setItem(STORE_KEY, JSON.stringify(d)); } catch(e){} };
+
+const CTX = createContext(null);
+const useApp = () => useContext(CTX);
+
+const Store = ({children}) => {
+  const saved = loadData();
+  const [lang, setLang] = useState(saved?.lang || null);
+  const [user, setUser] = useState(saved?.user || null);
+  const [products, setProducts] = useState(saved?.products || defaultProducts);
+  const [cart, setCart] = useState(saved?.cart || []);
+  const [favs, setFavs] = useState(saved?.favs || []);
+  const [config, setConfig] = useState(saved?.config || defaultConfig);
+  const [splashDone, setSplashDone] = useState(false);
+  const [theme, setTheme] = useState(saved?.theme || 'dark');
+
+  useEffect(() => {
+    saveData({ lang, user, products, cart, favs, config, theme });
+  }, [lang, user, products, cart, favs, config, theme]);
+
+  useEffect(() => {
+    document.body.classList.toggle('light', theme === 'light');
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', theme==='light' ? '#f5f2ed' : '#0a0a0f');
+  }, [theme]);
+
+  const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+
+  const t = useCallback((k) => (TR[lang] || TR.fr)[k] || k, [lang]);
+  const fmtPrice = useCallback((usd) => {
+    const khr = Math.round(usd * config.exchangeRate);
+    return { usd: `$${usd}`, khr: `${khr.toLocaleString()}៛`, both: `$${usd} · ${khr.toLocaleString()}៛` };
+  }, [config.exchangeRate]);
+
+  const addToCart = (p, size, color) => {
+    setCart(prev => {
+      const key = `${p.id}-${size}-${color}`;
+      const ex = prev.find(i => `${i.id}-${i.size}-${i.color}` === key);
+      if (ex) return prev.map(i => (`${i.id}-${i.size}-${i.color}` === key) ? {...i, qty: i.qty+1} : i);
+      return [...prev, { id: p.id, name: p.name, nameKm: p.nameKm, price: p.price, image: p.images[0], size, color, qty: 1 }];
+    });
+  };
+  const updateQty = (id, size, color, d) => setCart(prev => prev.map(i => (i.id===id && i.size===size && i.color===color) ? {...i, qty: Math.max(0, i.qty+d)} : i).filter(i => i.qty>0));
+  const removeItem = (id, size, color) => setCart(prev => prev.filter(i => !(i.id===id && i.size===size && i.color===color)));
+  const toggleFav = (id) => setFavs(prev => prev.includes(id) ? prev.filter(x=>x!==id) : [...prev, id]);
+  const clearCart = () => setCart([]);
+
+  return <CTX.Provider value={{
+    lang, setLang, user, setUser, products, setProducts, cart, addToCart, updateQty, removeItem, clearCart,
+    favs, toggleFav, config, setConfig, splashDone, setSplashDone, t, fmtPrice, theme, toggleTheme, setTheme
+  }}>{children}</CTX.Provider>;
+};
+
+/* ═══════════════════════ SVG ICONS ═══════════════════════ */
+const I = ({n, w=22, filled=false, cls=''}) => {
+  const p = {
+    home: filled ? <><path d="M4 12L12 4l8 8" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><path d="M6 10v9a1 1 0 001 1h4v-5h2v5h4a1 1 0 001-1v-9" fill="currentColor" opacity="0.15" stroke="currentColor" strokeWidth="1.5"/></> : <><path d="M4 12L12 4l8 8" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><path d="M6 10v9a1 1 0 001 1h4v-5h2v5h4a1 1 0 001-1v-9" fill="none" stroke="currentColor" strokeWidth="1.5"/></>,
+    search: <><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></>,
+    heart: filled ? <path d="M12 21C12 21 4 15 2.5 10.5 1 6 4 3 7 3c1.8 0 3.5 1 5 3 1.5-2 3.2-3 5-3 3 0 6 3 4.5 7.5C20 15 12 21 12 21z" fill="currentColor" stroke="currentColor" strokeWidth="1"/> : <path d="M12 21C12 21 4 15 2.5 10.5 1 6 4 3 7 3c1.8 0 3.5 1 5 3 1.5-2 3.2-3 5-3 3 0 6 3 4.5 7.5C20 15 12 21 12 21z" fill="none" stroke="currentColor" strokeWidth="1.5"/>,
+    bag: <><path d="M6 7h12l-1 13H7z" fill={filled?"currentColor":"none"} opacity={filled?0.15:1} stroke="currentColor" strokeWidth="1.5"/><path d="M9 7V5a3 3 0 016 0v2" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></>,
+    gear: <><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></>,
+    left: <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>,
+    right: <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>,
+    plus: <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>,
+    minus: <path d="M5 12h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>,
+    x: <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>,
+    trash: <><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" fill="none" stroke="currentColor" strokeWidth="1.5"/></>,
+    edit: <><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M18.5 2.5a2.1 2.1 0 013 3L12 15l-4 1 1-4z" fill="none" stroke="currentColor" strokeWidth="1.5"/></>,
+    filter: <path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>,
+    camera: <><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" fill="none" stroke="currentColor" strokeWidth="1.5"/><circle cx="12" cy="13" r="4" fill="none" stroke="currentColor" strokeWidth="1.5"/></>,
+    upload: <><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M17 8l-5-5-5 5M12 3v12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></>,
+    check: <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>,
+    globe: <><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10A15.3 15.3 0 0112 2z" fill="none" stroke="currentColor" strokeWidth="1.5"/></>,
+    user: <><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M20 21a8 8 0 10-16 0" fill="none" stroke="currentColor" strokeWidth="1.5"/></>,
+    lock: <><rect x="3" y="11" width="18" height="11" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M7 11V7a5 5 0 0110 0v4" fill="none" stroke="currentColor" strokeWidth="1.5"/></>,
+    sun: <><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></>,
+    moon: <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>,
+  };
+  return <svg viewBox="0 0 24 24" width={w} height={w} className={cls} style={{flexShrink:0}}>{p[n]}</svg>;
+};
+
+/* ═══════════════════════ SPLASH SCREEN ═══════════════════════ */
+const Splash = () => {
+  const { setSplashDone } = useApp();
+  const [exiting, setExiting] = useState(false);
+  useEffect(() => {
+    const t1 = setTimeout(() => setExiting(true), 2200);
+    const t2 = setTimeout(() => setSplashDone(true), 2800);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, []);
+  return (
+    <div className={`splash ${exiting?'splash-exit':''}`}>
+      <div className="splash-shimmer"></div>
+      <div className="ambient-orb orb1"></div>
+      <div className="ambient-orb orb2"></div>
+      <div className="splash-logo">Maison</div>
+      <div className="splash-line"></div>
+      <div className="splash-sub">Phnom Penh</div>
+    </div>
+  );
+};
+
+/* ═══════════════════════ AUTH + LANG SCREEN (merged) ═══════════════════════ */
+const AuthView = ({ onDone }) => {
+  const { t, setUser, lang, setLang, theme, toggleTheme } = useApp();
+  const [mode, setMode] = useState('login');
+  const [email, setEmail] = useState('');
+  const [pwd, setPwd] = useState('');
+  const [pwd2, setPwd2] = useState('');
+  const [err, setErr] = useState('');
+
+  const langs = [
+    { code:'fr', flag:'🇫🇷', label:'FR' },
+    { code:'en', flag:'🇬🇧', label:'EN' },
+    { code:'km', flag:'🇰🇭', label:'KH' },
+  ];
+
+  const handleSubmit = () => {
+    if (!email || !pwd) { setErr('Fill all fields'); return; }
+    if (mode === 'signup' && pwd !== pwd2) { setErr('Passwords don\'t match'); return; }
+    const users = JSON.parse(localStorage.getItem('maison_users') || '{}');
+    if (mode === 'signup') {
+      if (users[email]) { setErr('Email exists'); return; }
+      users[email] = { pwd, name: email.split('@')[0] };
+      localStorage.setItem('maison_users', JSON.stringify(users));
+    } else {
+      if (!users[email] || users[email].pwd !== pwd) { setErr('Invalid credentials'); return; }
+    }
+    setUser({ email, name: users[email].name });
+    onDone();
+  };
+
+  const handleGuest = () => {
+    setUser({ email: null, name: 'Guest', isGuest: true });
+    onDone();
+  };
+
+  // Auto-set default lang if none
+  useEffect(() => { if(!lang) setLang('fr'); }, []);
+
+  return (
+    <div style={{minHeight:'100vh',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'24px',position:'relative'}}>
+      <div className="ambient-orb orb1"></div>
+      <div className="ambient-orb orb2"></div>
+
+      {/* Top bar: lang + theme toggle — all top right */}
+      <div style={{position:'absolute',top:52,right:18,display:'flex',alignItems:'center',gap:6,zIndex:10}}>
+        {/* Language compact selector */}
+        {langs.map(l => (
+          <button key={l.code} onClick={()=>setLang(l.code)}
+            className={lang===l.code ? 'glass3' : 'glass'}
+            style={{width:38,height:38,borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer',transition:'all .3s',border:lang===l.code?'1px solid var(--accent)':'1px solid var(--glassBorder)'}}>
+            <span style={{fontSize:16}}>{l.flag}</span>
+          </button>
+        ))}
+        {/* Separator */}
+        <div style={{width:1,height:24,background:'var(--glassBorder2)',margin:'0 2px'}}></div>
+        {/* Theme toggle */}
+        <button onClick={toggleTheme} className="glass" style={{width:38,height:38,borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer',transition:'all .3s'}}>
+          <I n={theme==='dark'?'sun':'moon'} w={15}/>
+        </button>
+      </div>
+
+      {/* Logo + tagline */}
+      <div className="fade-up" style={{textAlign:'center',marginBottom:36,position:'relative',zIndex:2}}>
+        <div style={{fontFamily:'var(--fontDisplay)',fontSize:48,fontStyle:'italic',fontWeight:400,color:'var(--accent2)'}}>Maison</div>
+        <div style={{fontSize:11,color:'var(--text3)',marginTop:6}}>{t('tagline')}</div>
+      </div>
+
+      {/* Auth form */}
+      <div style={{width:'100%',maxWidth:360,position:'relative',zIndex:2}} className="fade-up stagger-2">
+        <div className="glass2" style={{borderRadius:'var(--radiusXl)',padding:24,display:'flex',flexDirection:'column',gap:14}}>
+          {/* Login / Signup tabs */}
+          <div style={{display:'flex',borderRadius:12,overflow:'hidden',background:'var(--glass)'}}>
+            {['login','signup'].map(m => (
+              <button key={m} onClick={()=>{setMode(m);setErr('');}} style={{flex:1,padding:'12px',fontSize:13,fontWeight:mode===m?600:400,color:mode===m?'var(--accent)':'var(--text3)',background:mode===m?'var(--glass2)':'transparent',transition:'all .3s',cursor:'pointer',textTransform:'uppercase',letterSpacing:'0.05em'}}>
+                {t(m)}
+              </button>
+            ))}
+          </div>
+          <input className="glass-input" type="email" placeholder={t('email')} value={email} onChange={e=>setEmail(e.target.value)} />
+          <input className="glass-input" type="password" placeholder={t('password')} value={pwd} onChange={e=>setPwd(e.target.value)} />
+          {mode==='signup' && <input className="glass-input" type="password" placeholder={t('confirmPwd')} value={pwd2} onChange={e=>setPwd2(e.target.value)} />}
+          {err && <div style={{color:'var(--danger)',fontSize:12,textAlign:'center'}}>{err}</div>}
+          <button className="glass-btn" onClick={handleSubmit}>{t(mode)}</button>
+          <div style={{display:'flex',alignItems:'center',gap:12,margin:'4px 0'}}>
+            <div style={{flex:1,height:1,background:'var(--glassBorder2)'}}></div>
+            <span style={{fontSize:11,color:'var(--text3)',textTransform:'uppercase',letterSpacing:'0.1em'}}>{t('or')}</span>
+            <div style={{flex:1,height:1,background:'var(--glassBorder2)'}}></div>
+          </div>
+          <button className="glass-btn-outline" onClick={handleGuest} style={{display:'flex',alignItems:'center',justifyContent:'center',gap:8}}>
+            <I n="user" w={16}/> {t('guest')}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ═══════════════════════ HEADER ═══════════════════════ */
+const Header = ({ onAdmin }) => {
+  const { lang, t, theme, toggleTheme } = useApp();
+  return (
+    <div style={{padding:'52px 18px 14px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+      <div>
+        <div style={{fontFamily:'var(--fontDisplay)',fontSize:28,fontStyle:'italic',fontWeight:400,color:'var(--accent2)',lineHeight:1}}>Maison</div>
+        <div style={{fontSize:9,letterSpacing:'0.25em',textTransform:'uppercase',color:'var(--text3)',marginTop:4}}>Phnom Penh ◦ EST 2024</div>
+      </div>
+      <div style={{display:'flex',gap:8}}>
+        <button onClick={toggleTheme} className="glass" style={{width:40,height:40,borderRadius:20,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer',transition:'all .3s'}}>
+          <I n={theme==='dark'?'sun':'moon'} w={16}/>
+        </button>
+        <button onClick={onAdmin} className="glass" style={{width:40,height:40,borderRadius:20,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer'}}>
+          <I n="lock" w={16}/>
+        </button>
+      </div>
+    </div>
+  );
+};
+
+/* ═══════════════════════ IMAGE CAROUSEL ═══════════════════════ */
+const Carousel = ({images, height='100%', radius='var(--radius)', children}) => {
+  const ref = useRef(null);
+  const [idx, setIdx] = useState(0);
+  const onScroll = () => {
+    if(!ref.current) return;
+    const i = Math.round(ref.current.scrollLeft / ref.current.offsetWidth);
+    setIdx(i);
+  };
+  if(images.length <= 1) return (
+    <div style={{position:'relative',height,borderRadius:radius,overflow:'hidden',background:'var(--bg3)'}}>
+      <img src={images[0]} style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+      {children}
+    </div>
+  );
+  return (
+    <div style={{position:'relative'}}>
+      <div ref={ref} className="carousel scrollbar-hide" onScroll={onScroll} style={{borderRadius:radius,overflow:'hidden',height}}>
+        {images.map((img,i) => <img key={i} src={img} style={{width:'100%',height:'100%',objectFit:'cover'}}/>)}
+      </div>
+      <div className="carousel-dots" style={{position:'absolute',bottom:10,left:0,right:0}}>
+        {images.map((_,i) => <div key={i} className={`carousel-dot ${i===idx?'active':''}`}/>)}
+      </div>
+      {children}
+    </div>
+  );
+};
+
+/* ═══════════════════════ PRODUCT CARD ═══════════════════════ */
+const ProductCard = ({product, onClick}) => {
+  const { favs, toggleFav, t, fmtPrice, lang } = useApp();
+  const isFav = favs.includes(product.id);
+  const [pop, setPop] = useState(false);
+  const handleFav = (e) => { e.stopPropagation(); toggleFav(product.id); setPop(true); setTimeout(()=>setPop(false),400); };
+  const displayName = lang==='km' && product.nameKm ? product.nameKm : product.name;
+  return (
+    <div className="product-card fade-up" onClick={onClick}>
+      <div className="product-img-wrap">
+        <img src={product.images[0]} className="product-img" alt={displayName}/>
+        {product.isNew && <div className="product-tag glass2" style={{color:'var(--accent)'}}>{t('newTag')}</div>}
+        {product.stock<=0 && <div className="product-tag" style={{background:'var(--danger)',color:'white'}}>{t('soldOut')}</div>}
+        <div className={`fav-btn glass ${pop?'heart-pop':''}`} onClick={handleFav}>
+          <I n="heart" w={15} filled={isFav} cls={isFav?'':''}/>
+        </div>
+      </div>
+      <div style={{padding:'10px 4px 0'}}>
+        <div style={{fontSize:13,fontWeight:500,lineHeight:1.3}} className={lang==='km'?'khmer':''}>{displayName}</div>
+        <div style={{fontSize:12,color:'var(--accent)',marginTop:3,fontWeight:500}}>{fmtPrice(product.price).both}</div>
+      </div>
+    </div>
+  );
+};
+
+/* ═══════════════════════ SHOP VIEW ═══════════════════════ */
+const ShopView = ({onSelect, onAdmin}) => {
+  const { products, t, lang } = useApp();
+  const [cat, setCat] = useState('all');
+  const cats = ['all','women','men','accessories'];
+  const filtered = cat==='all' ? products : products.filter(p=>p.category===cat);
+  return (
+    <div style={{paddingBottom:90}}>
+      <Header onAdmin={onAdmin}/>
+      <div style={{padding:'0 18px 20px'}}>
+        <div style={{fontFamily:'var(--fontDisplay)',fontSize:32,lineHeight:1.2}}>
+          <span style={{fontStyle:'italic',fontWeight:400,color:'var(--text)'}}>{t('discover')}</span>
+        </div>
+      </div>
+      <div className="scrollbar-hide" style={{display:'flex',gap:8,padding:'0 18px 18px',overflowX:'auto'}}>
+        {cats.map(c => (
+          <button key={c} onClick={()=>setCat(c)} className={cat===c?'glass3':'glass'} style={{padding:'10px 18px',borderRadius:30,fontSize:11,letterSpacing:'0.06em',textTransform:'uppercase',fontWeight:cat===c?600:400,color:cat===c?'var(--accent)':'var(--text2)',whiteSpace:'nowrap',cursor:'pointer',transition:'all .3s'}}>
+            {t(c)}
+          </button>
+        ))}
+      </div>
+      <div className="product-grid">
+        {filtered.map((p,i) => <div key={p.id} className={`stagger-${(i%4)+1}`}><ProductCard product={p} onClick={()=>onSelect(p)}/></div>)}
+      </div>
+    </div>
+  );
+};
+
+/* ═══════════════════════ SEARCH VIEW ═══════════════════════ */
+const SearchView = ({onSelect}) => {
+  const { products, t, lang, fmtPrice } = useApp();
+  const [q, setQ] = useState('');
+  const [sort, setSort] = useState('newest');
+  const [maxP, setMaxP] = useState(200);
+  const [showF, setShowF] = useState(false);
+  const results = useMemo(()=>{
+    let r = products.filter(p => (p.name+' '+(p.nameKm||'')).toLowerCase().includes(q.toLowerCase()) && p.price<=maxP);
+    if(sort==='priceLow') r=[...r].sort((a,b)=>a.price-b.price);
+    if(sort==='priceHigh') r=[...r].sort((a,b)=>b.price-a.price);
+    if(sort==='newest') r=[...r].sort((a,b)=>(b.isNew?1:0)-(a.isNew?1:0));
+    return r;
+  },[products,q,sort,maxP]);
+  return (
+    <div style={{paddingBottom:90}}>
+      <div style={{padding:'52px 18px 14px'}}>
+        <div style={{fontFamily:'var(--fontDisplay)',fontSize:28,fontStyle:'italic',marginBottom:16}}>{t('search')}</div>
+        <div style={{display:'flex',gap:8}}>
+          <div style={{flex:1,position:'relative'}}>
+            <div style={{position:'absolute',left:14,top:'50%',transform:'translateY(-50%)',color:'var(--text3)'}}><I n="search" w={16}/></div>
+            <input className="glass-input" value={q} onChange={e=>setQ(e.target.value)} placeholder={t('searchHint')} style={{paddingLeft:40}}/>
+          </div>
+          <button onClick={()=>setShowF(!showF)} className="glass" style={{width:48,height:48,borderRadius:14,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer'}}>
+            <I n="filter" w={16}/>
+          </button>
+        </div>
+        {showF && (
+          <div className="glass2 fade-up" style={{borderRadius:'var(--radiusSm)',padding:16,marginTop:12}}>
+            <div style={{fontSize:11,textTransform:'uppercase',letterSpacing:'0.1em',color:'var(--text3)',marginBottom:8}}>{t('priceRange')}: $0 - ${maxP}</div>
+            <input type="range" min="10" max="200" value={maxP} onChange={e=>setMaxP(+e.target.value)} style={{width:'100%',accentColor:'var(--accent)'}}/>
+            <div style={{fontSize:11,textTransform:'uppercase',letterSpacing:'0.1em',color:'var(--text3)',marginTop:12,marginBottom:8}}>{t('sortBy')}</div>
+            <div style={{display:'flex',gap:6,flexWrap:'wrap'}}>
+              {['newest','priceLow','priceHigh'].map(s => (
+                <button key={s} onClick={()=>setSort(s)} className={sort===s?'glass3':'glass'} style={{padding:'8px 14px',borderRadius:10,fontSize:11,cursor:'pointer',color:sort===s?'var(--accent)':'var(--text2)',fontWeight:sort===s?600:400}}>{t(s)}</button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+      {results.length===0 ? (
+        <div style={{textAlign:'center',padding:'60px 20px',color:'var(--text3)'}}><I n="search" w={40} cls=""/><div style={{marginTop:12}}>{t('noResults')}</div></div>
+      ) : (
+        <div className="product-grid" style={{marginTop:4}}>{results.map(p=><ProductCard key={p.id} product={p} onClick={()=>onSelect(p)}/>)}</div>
+      )}
+    </div>
+  );
+};
+
+/* ═══════════════════════ FAVORITES VIEW ═══════════════════════ */
+const FavView = ({onSelect}) => {
+  const { products, favs, t } = useApp();
+  const items = products.filter(p => favs.includes(p.id));
+  return (
+    <div style={{paddingBottom:90}}>
+      <div style={{padding:'52px 18px 20px'}}><div style={{fontFamily:'var(--fontDisplay)',fontSize:28,fontStyle:'italic'}}>{t('favorites')}</div></div>
+      {items.length===0 ? (
+        <div style={{textAlign:'center',padding:'60px 20px',color:'var(--text3)'}}><I n="heart" w={40}/><div style={{marginTop:12}}>{t('emptyFav')}</div></div>
+      ) : (
+        <div className="product-grid">{items.map(p=><ProductCard key={p.id} product={p} onClick={()=>onSelect(p)}/>)}</div>
+      )}
+    </div>
+  );
+};
+
+/* ═══════════════════════ CART VIEW ═══════════════════════ */
+const CartViewComp = ({onCheckout}) => {
+  const { cart, updateQty, removeItem, t, fmtPrice } = useApp();
+  const subtotal = cart.reduce((s,i)=>s+i.price*i.qty, 0);
+  return (
+    <div style={{paddingBottom:90}}>
+      <div style={{padding:'52px 18px 20px'}}><div style={{fontFamily:'var(--fontDisplay)',fontSize:28,fontStyle:'italic'}}>{t('cart')}</div></div>
+      {cart.length===0 ? (
+        <div style={{textAlign:'center',padding:'60px 20px',color:'var(--text3)'}}><I n="bag" w={40}/><div style={{marginTop:12}}>{t('emptyCart')}</div></div>
+      ) : (
+        <>
+          <div style={{padding:'0 18px',display:'flex',flexDirection:'column',gap:10}}>
+            {cart.map(item => (
+              <div key={`${item.id}-${item.size}-${item.color}`} className="glass-card fade-up" style={{borderRadius:'var(--radiusSm)',padding:12,display:'flex',gap:12}}>
+                <img src={item.image} style={{width:70,height:88,objectFit:'cover',borderRadius:12}}/>
+                <div style={{flex:1,display:'flex',flexDirection:'column',justifyContent:'space-between'}}>
+                  <div>
+                    <div style={{fontSize:13,fontWeight:500}}>{item.name}</div>
+                    <div style={{fontSize:11,color:'var(--text3)',marginTop:2}}>{item.size} · {item.color}</div>
+                    <div style={{fontSize:13,fontWeight:600,color:'var(--accent)',marginTop:4}}>{fmtPrice(item.price*item.qty).both}</div>
+                  </div>
+                  <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+                    <div className="glass" style={{display:'flex',alignItems:'center',borderRadius:10,overflow:'hidden'}}>
+                      <button onClick={()=>updateQty(item.id,item.size,item.color,-1)} style={{width:32,height:32,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer'}}><I n="minus" w={12}/></button>
+                      <span style={{width:24,textAlign:'center',fontSize:12,fontWeight:600}}>{item.qty}</span>
+                      <button onClick={()=>updateQty(item.id,item.size,item.color,1)} style={{width:32,height:32,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer'}}><I n="plus" w={12}/></button>
+                    </div>
+                    <button onClick={()=>removeItem(item.id,item.size,item.color)} style={{color:'var(--text3)',cursor:'pointer'}}><I n="trash" w={16}/></button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{padding:'20px 18px',display:'flex',flexDirection:'column',gap:8}}>
+            <div style={{display:'flex',justifyContent:'space-between',fontSize:13,color:'var(--text2)'}}><span>{t('subtotal')}</span><span>{fmtPrice(subtotal).both}</span></div>
+            <div style={{display:'flex',justifyContent:'space-between',fontSize:13,color:'var(--text2)'}}><span>{t('delivery')}</span><span style={{color:'var(--success)'}}>{t('free')}</span></div>
+            <div style={{height:1,background:'var(--glassBorder)',margin:'4px 0'}}></div>
+            <div style={{display:'flex',justifyContent:'space-between',fontSize:17,fontWeight:600}}><span>{t('total')}</span><span style={{color:'var(--accent)'}}>{fmtPrice(subtotal).both}</span></div>
+            <button className="glass-btn" style={{marginTop:8}} onClick={onCheckout}>{t('checkout')}</button>
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+/* ═══════════════════════ PRODUCT DETAIL ═══════════════════════ */
+const ProductDetail = ({product, onBack}) => {
+  const { addToCart, favs, toggleFav, t, fmtPrice, lang } = useApp();
+  const [size, setSize] = useState(product.sizes[0]);
+  const [color, setColor] = useState((product.colors||[])[0] || '');
+  const [added, setAdded] = useState(false);
+  const isFav = favs.includes(product.id);
+  const displayName = lang==='km' && product.nameKm ? product.nameKm : product.name;
+  const handleAdd = () => { addToCart(product, size, color); setAdded(true); setTimeout(()=>setAdded(false),1500); };
+  return (
+    <div style={{minHeight:'100vh',paddingBottom:100}} className="fade-in">
+      <div style={{position:'relative',aspectRatio:'3/4'}}>
+        <Carousel images={product.images} radius="0">
+          <button onClick={onBack} className="glass" style={{position:'absolute',top:50,left:16,width:40,height:40,borderRadius:20,display:'flex',alignItems:'center',justifyContent:'center',zIndex:5,cursor:'pointer'}}><I n="left" w={18}/></button>
+          <button onClick={()=>toggleFav(product.id)} className="glass" style={{position:'absolute',top:50,right:16,width:40,height:40,borderRadius:20,display:'flex',alignItems:'center',justifyContent:'center',zIndex:5,cursor:'pointer'}}><I n="heart" w={18} filled={isFav}/></button>
+        </Carousel>
+      </div>
+      <div style={{padding:'20px 20px 0'}}>
+        {product.isNew && <div className="glass2" style={{display:'inline-block',padding:'4px 12px',borderRadius:8,fontSize:9,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--accent)',fontWeight:600,marginBottom:10}}>{t('newTag')}</div>}
+        <div style={{fontFamily:'var(--fontDisplay)',fontSize:28,fontStyle:'italic',fontWeight:400,lineHeight:1.2}} className={lang==='km'?'khmer':''}>{displayName}</div>
+        <div style={{fontSize:22,fontWeight:600,color:'var(--accent)',marginTop:6,fontFamily:'var(--fontDisplay)'}}>{fmtPrice(product.price).both}</div>
+        <div style={{width:40,height:1,background:'var(--glassBorder2)',margin:'16px 0'}}></div>
+        <div style={{fontSize:13,color:'var(--text2)',lineHeight:1.7}}>{product.description}</div>
+        {product.stock > 0 && <div style={{fontSize:11,color:'var(--success)',marginTop:8}}>{t('stock')}: {product.stock}</div>}
+        {product.stock <= 0 && <div style={{fontSize:11,color:'var(--danger)',marginTop:8}}>{t('outOfStock')}</div>}
+        <div style={{marginTop:20}}>
+          <div style={{fontSize:10,textTransform:'uppercase',letterSpacing:'0.15em',color:'var(--text3)',marginBottom:10}}>{t('size')}</div>
+          <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
+            {product.sizes.map(s => (
+              <button key={s} onClick={()=>setSize(s)} className={size===s?'glass3':'glass'} style={{minWidth:48,height:44,padding:'0 16px',borderRadius:12,fontSize:13,cursor:'pointer',color:size===s?'var(--accent)':'var(--text2)',fontWeight:size===s?600:400,transition:'all .3s'}}>{s}</button>
+            ))}
+          </div>
+        </div>
+        {product.colors && product.colors.length > 0 && (
+          <div style={{marginTop:16}}>
+            <div style={{fontSize:10,textTransform:'uppercase',letterSpacing:'0.15em',color:'var(--text3)',marginBottom:10}}>{t('color')}</div>
+            <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
+              {product.colors.map(c => (
+                <button key={c} onClick={()=>setColor(c)} className={color===c?'glass3':'glass'} style={{padding:'10px 16px',borderRadius:12,fontSize:12,cursor:'pointer',color:color===c?'var(--accent)':'var(--text2)',fontWeight:color===c?600:400,transition:'all .3s'}}>{c}</button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="glass2" style={{position:'fixed',bottom:0,left:0,right:0,padding:'14px 20px',paddingBottom:'calc(14px + var(--safe-b))',zIndex:10}}>
+        <button className="glass-btn" onClick={handleAdd} disabled={product.stock<=0} style={{background:added?'var(--success)':''}}>
+          {added ? '✓ '+t('added') : t('addCart')}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+/* ═══════════════════════ CHECKOUT ═══════════════════════ */
+const CheckoutView = ({onBack}) => {
+  const { cart, clearCart, t, fmtPrice, config } = useApp();
+  const [form, setForm] = useState({name:'',phone:'',address:'',notes:''});
+  const [method, setMethod] = useState('whatsapp');
+  const [step, setStep] = useState(1); // 1=info, 2=pay, 3=done
+  const [proofFile, setProofFile] = useState(null);
+  const total = cart.reduce((s,i)=>s+i.price*i.qty, 0);
+  const fileRef = useRef(null);
+
+  const orderText = () => {
+    return `🛒 *Maison Order*\n\n${cart.map(i=>`▪ ${i.name} (${i.size}/${i.color}) x${i.qty} — ${fmtPrice(i.price*i.qty).both}`).join('\n')}\n\n💰 *Total: ${fmtPrice(total).both}*\n\n👤 ${form.name}\n📞 ${form.phone}\n📍 ${form.address}\n📝 ${form.notes||'—'}`;
+  };
+
+  const sendVia = (via) => {
+    const txt = encodeURIComponent(orderText());
+    if(via==='whatsapp') window.open(`https://wa.me/${config.whatsappNumber||'855000000000'}?text=${txt}`,'_blank');
+    if(via==='telegram') window.open(`https://t.me/share/url?url=order&text=${txt}`,'_blank');
+    if(via==='messenger') window.open(`https://m.me/?text=${txt}`,'_blank');
+  };
+
+  // Telegram Bot auto-send
+  const sendTelegramBot = async (message) => {
+    if (!config.telegramBot || !config.telegramChatId) return false;
+    try {
+      const res = await fetch(`https://api.telegram.org/bot${config.telegramBot}/sendMessage`, {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ chat_id: config.telegramChatId, text: message, parse_mode: 'Markdown' })
+      });
+      return res.ok;
+    } catch(e) { return false; }
+  };
+
+  const handleConfirm = () => {
+    if(step===1) { setStep(2); return; }
+    if(step===2) {
+      sendTelegramBot(orderText());
+      sendVia(method);
+      setStep(3);
+      setTimeout(()=>{ clearCart(); onBack(); }, 2500);
+    }
+  };
+
+  if(step===3) return (
+    <div style={{minHeight:'100vh',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}} className="fade-in">
+      <div className="glass3" style={{width:80,height:80,borderRadius:40,display:'flex',alignItems:'center',justifyContent:'center',marginBottom:20}}>
+        <I n="check" w={36} cls="" />
+      </div>
+      <div style={{fontFamily:'var(--fontDisplay)',fontSize:24,fontStyle:'italic',color:'var(--accent2)'}}>{t('orderSent')}</div>
+    </div>
+  );
+
+  const methods = [
+    {id:'whatsapp', label:'WhatsApp', emoji:'💬'},
+    {id:'telegram', label:'Telegram', emoji:'✈️'},
+    {id:'messenger', label:'Messenger', emoji:'💜'},
+  ];
+
+  return (
+    <div style={{minHeight:'100vh',paddingBottom:100}} className="fade-in">
+      <div style={{padding:'52px 18px 14px',display:'flex',alignItems:'center',gap:12}}>
+        <button onClick={onBack} className="glass" style={{width:40,height:40,borderRadius:20,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer'}}><I n="left" w={18}/></button>
+        <div style={{fontFamily:'var(--fontDisplay)',fontSize:24,fontStyle:'italic'}}>{t('checkout')}</div>
+      </div>
+      <div style={{padding:'0 18px',display:'flex',flexDirection:'column',gap:14}}>
+        {/* Summary */}
+        <div className="glass2" style={{borderRadius:'var(--radius)',padding:16}}>
+          <div style={{fontSize:10,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--text3)',marginBottom:10}}>{t('subtotal')}</div>
+          {cart.map(i=>(
+            <div key={`${i.id}-${i.size}-${i.color}`} style={{display:'flex',justifyContent:'space-between',fontSize:12,color:'var(--text2)',padding:'4px 0'}}>
+              <span>{i.name} × {i.qty}</span><span>{fmtPrice(i.price*i.qty).both}</span>
+            </div>
+          ))}
+          <div style={{height:1,background:'var(--glassBorder)',margin:'8px 0'}}></div>
+          <div style={{display:'flex',justifyContent:'space-between',fontSize:16,fontWeight:600}}>
+            <span>{t('total')}</span><span style={{color:'var(--accent)'}}>{fmtPrice(total).both}</span>
+          </div>
+        </div>
+
+        {step===1 && (
+          <div className="glass2 fade-up" style={{borderRadius:'var(--radius)',padding:16,display:'flex',flexDirection:'column',gap:12}}>
+            <div style={{fontSize:10,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--text3)'}}>{t('payInfo')}</div>
+            <input className="glass-input" placeholder={t('yourName')} value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/>
+            <input className="glass-input" placeholder={t('phone')} value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})}/>
+            <input className="glass-input" placeholder={t('address')} value={form.address} onChange={e=>setForm({...form,address:e.target.value})}/>
+            <textarea className="glass-input" placeholder={t('notes')} rows="2" value={form.notes} onChange={e=>setForm({...form,notes:e.target.value})} style={{resize:'none'}}/>
+          </div>
+        )}
+
+        {step===2 && (
+          <>
+            {/* QR ABA */}
+            <div className="glass2 fade-up" style={{borderRadius:'var(--radius)',padding:20,textAlign:'center'}}>
+              <div style={{fontSize:10,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--text3)',marginBottom:12}}>{t('scanQR')}</div>
+              <div className="glass" style={{width:180,height:180,borderRadius:16,margin:'0 auto',display:'flex',alignItems:'center',justifyContent:'center',position:'relative',overflow:'hidden'}}>
+                <div style={{fontSize:11,color:'var(--text3)'}}>ABA KHQR</div>
+                <div style={{position:'absolute',inset:0,background:'linear-gradient(135deg,rgba(201,169,110,0.1),transparent)',pointerEvents:'none'}}></div>
+              </div>
+              <div style={{fontSize:11,color:'var(--text3)',marginTop:10,lineHeight:1.5}}>{t('qrInstruction')}</div>
+              <input type="file" ref={fileRef} accept="image/*" capture="environment" style={{display:'none'}} onChange={e=>{if(e.target.files[0])setProofFile(e.target.files[0]);}}/>
+              <div style={{display:'flex',gap:8,marginTop:14}}>
+                <button className="glass-btn-outline" onClick={()=>{fileRef.current.setAttribute('capture','environment');fileRef.current.click();}} style={{flex:1,display:'flex',alignItems:'center',justifyContent:'center',gap:6,fontSize:12}}>
+                  <I n="camera" w={14}/> {t('takePhoto')}
+                </button>
+                <button className="glass-btn-outline" onClick={()=>{fileRef.current.removeAttribute('capture');fileRef.current.click();}} style={{flex:1,display:'flex',alignItems:'center',justifyContent:'center',gap:6,fontSize:12}}>
+                  <I n="upload" w={14}/> {t('chooseFile')}
+                </button>
+              </div>
+              {proofFile && <div style={{marginTop:8,fontSize:11,color:'var(--success)'}}>✓ {proofFile.name}</div>}
+            </div>
+
+            {/* Send via */}
+            <div className="glass2 fade-up stagger-2" style={{borderRadius:'var(--radius)',padding:16}}>
+              <div style={{fontSize:10,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--text3)',marginBottom:10}}>{t('orderVia')}</div>
+              <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:8}}>
+                {methods.map(m=>(
+                  <button key={m.id} onClick={()=>setMethod(m.id)} className={method===m.id?'glass3':'glass'} style={{padding:14,borderRadius:'var(--radiusSm)',cursor:'pointer',textAlign:'center',transition:'all .3s',border:method===m.id?'1px solid var(--accent)':'1px solid var(--glassBorder)'}}>
+                    <div style={{fontSize:24,marginBottom:4}}>{m.emoji}</div>
+                    <div style={{fontSize:10,fontWeight:500,color:method===m.id?'var(--accent)':'var(--text2)'}}>{m.label}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+      <div className="glass2" style={{position:'fixed',bottom:0,left:0,right:0,padding:'14px 20px',paddingBottom:'calc(14px + var(--safe-b))',zIndex:10}}>
+        <button className="glass-btn" onClick={handleConfirm} disabled={step===1 && (!form.name || !form.phone)}>
+          {step===1 ? t('checkout') : t('sendOrder')}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+/* ═══════════════════════ SETTINGS VIEW ═══════════════════════ */
+const SettingsView = () => {
+  const { t, lang, setLang, user, setUser, config, setConfig, theme, toggleTheme } = useApp();
+  const langs = [{code:'fr',flag:'🇫🇷',label:'Français'},{code:'en',flag:'🇬🇧',label:'English'},{code:'km',flag:'🇰🇭',label:'ខ្មែរ'}];
+  return (
+    <div style={{paddingBottom:90}}>
+      <div style={{padding:'52px 18px 20px'}}><div style={{fontFamily:'var(--fontDisplay)',fontSize:28,fontStyle:'italic'}}>{t('settings')}</div></div>
+      <div style={{padding:'0 18px',display:'flex',flexDirection:'column',gap:14}}>
+        {/* Profile */}
+        <div className="glass2" style={{borderRadius:'var(--radius)',padding:16}}>
+          <div style={{fontSize:10,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--text3)',marginBottom:12}}>{t('profile')}</div>
+          <div style={{display:'flex',alignItems:'center',gap:12}}>
+            <div className="glass3" style={{width:48,height:48,borderRadius:24,display:'flex',alignItems:'center',justifyContent:'center'}}><I n="user" w={22}/></div>
+            <div>
+              <div style={{fontSize:15,fontWeight:500}}>{user?.name || 'Guest'}</div>
+              <div style={{fontSize:12,color:'var(--text3)'}}>{user?.email || 'No account'}</div>
+            </div>
+          </div>
+          {user && (
+            <button className="glass-btn-outline" onClick={()=>setUser(null)} style={{marginTop:12,fontSize:12}}>{t('logout')}</button>
+          )}
+        </div>
+
+        {/* Theme */}
+        <div className="glass2" style={{borderRadius:'var(--radius)',padding:16}}>
+          <div style={{fontSize:10,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--text3)',marginBottom:12}}>{t('darkMode')}</div>
+          <div style={{display:'flex',gap:8}}>
+            {[{id:'dark',icon:'moon',label:'Dark'},{id:'light',icon:'sun',label:'Light'}].map(m => (
+              <button key={m.id} onClick={()=>{ if(theme!==m.id) toggleTheme(); }} className={theme===m.id?'glass3':'glass'} style={{flex:1,padding:14,borderRadius:12,textAlign:'center',cursor:'pointer',border:theme===m.id?'1px solid var(--accent)':'1px solid var(--glassBorder)',transition:'all .3s',display:'flex',flexDirection:'column',alignItems:'center',gap:6}}>
+                <I n={m.icon} w={20}/>
+                <div style={{fontSize:11,fontWeight:theme===m.id?600:400,color:theme===m.id?'var(--accent)':'var(--text2)'}}>{m.label}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Language */}
+        <div className="glass2" style={{borderRadius:'var(--radius)',padding:16}}>
+          <div style={{fontSize:10,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--text3)',marginBottom:12}}>{t('language')}</div>
+          <div style={{display:'flex',gap:8}}>
+            {langs.map(l => (
+              <button key={l.code} onClick={()=>setLang(l.code)} className={lang===l.code?'glass3':'glass'} style={{flex:1,padding:12,borderRadius:12,textAlign:'center',cursor:'pointer',border:lang===l.code?'1px solid var(--accent)':'1px solid var(--glassBorder)',transition:'all .3s'}}>
+                <div style={{fontSize:22}}>{l.flag}</div>
+                <div style={{fontSize:10,marginTop:4,fontWeight:lang===l.code?600:400,color:lang===l.code?'var(--accent)':'var(--text2)'}}>{l.label}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Exchange Rate */}
+        <div className="glass2" style={{borderRadius:'var(--radius)',padding:16}}>
+          <div style={{fontSize:10,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--text3)',marginBottom:12}}>{t('exchangeRate')}</div>
+          <div style={{display:'flex',alignItems:'center',gap:8}}>
+            <span style={{fontSize:13}}>1 USD =</span>
+            <input className="glass-input" type="number" value={config.exchangeRate} onChange={e=>setConfig({...config,exchangeRate:+e.target.value||4100})} style={{width:100,textAlign:'center'}}/>
+            <span style={{fontSize:13}}>៛</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ═══════════════════════ ADMIN VIEW ═══════════════════════ */
+const AdminView = ({onBack}) => {
+  const { products, setProducts, config, setConfig, t } = useApp();
+  const [authed, setAuthed] = useState(false);
+  const [pwd, setPwd] = useState('');
+  const [editing, setEditing] = useState(null);
+  const [tab, setTab] = useState('products');
+  const [form, setForm] = useState({});
+
+  if(!authed) return (
+    <div style={{minHeight:'100vh',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:24,position:'relative'}}>
+      <div className="ambient-orb orb1"></div>
+      <button onClick={onBack} className="glass" style={{position:'absolute',top:52,left:18,width:40,height:40,borderRadius:20,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer'}}><I n="left" w={18}/></button>
+      <div className="glass2 fade-up" style={{borderRadius:'var(--radiusXl)',padding:28,width:'100%',maxWidth:340,textAlign:'center'}}>
+        <I n="lock" w={32} cls=""/>
+        <div style={{fontFamily:'var(--fontDisplay)',fontSize:24,fontStyle:'italic',margin:'12px 0 4px'}}>{t('adminPanel')}</div>
+        <div style={{fontSize:11,color:'var(--text3)',marginBottom:20}}>Enter admin password</div>
+        <input className="glass-input" type="password" placeholder={t('password')} value={pwd} onChange={e=>setPwd(e.target.value)} style={{marginBottom:12}}/>
+        <button className="glass-btn" onClick={()=>{ if(pwd===config.adminPassword) setAuthed(true); else alert('Wrong password'); }}>{t('login')}</button>
+        <div style={{fontSize:9,color:'var(--text3)',marginTop:10}}>Default: admin123</div>
+      </div>
+    </div>
+  );
+
+  const startNew = () => {
+    setEditing('new');
+    setForm({name:'',nameKm:'',price:'',category:'women',images:'',sizes:'S,M,L',colors:'',stock:'10',description:'',isNew:true});
+  };
+  const startEdit = (p) => {
+    setEditing(p.id);
+    setForm({...p, images: p.images.join('\n'), sizes: p.sizes.join(','), colors: (p.colors||[]).join(','), stock: String(p.stock||0)});
+  };
+  const save = () => {
+    const data = {...form, price:+form.price, stock:+form.stock, images:form.images.split('\n').map(s=>s.trim()).filter(Boolean), sizes:form.sizes.split(',').map(s=>s.trim()).filter(Boolean), colors:form.colors.split(',').map(s=>s.trim()).filter(Boolean)};
+    if(editing==='new') setProducts([...products, {...data, id:Date.now()}]);
+    else setProducts(products.map(p=>p.id===editing?{...data,id:editing}:p));
+    setEditing(null);
+  };
+  const remove = (id) => { if(confirm('Delete?')) setProducts(products.filter(p=>p.id!==id)); };
+
+  const tabs = [{id:'products',label:t('products')},{id:'config',label:t('config')}];
+
+  return (
+    <div style={{minHeight:'100vh',paddingBottom:24}} className="fade-in">
+      <div style={{padding:'52px 18px 14px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+        <button onClick={onBack} className="glass" style={{width:40,height:40,borderRadius:20,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer'}}><I n="left" w={18}/></button>
+        <div style={{fontFamily:'var(--fontDisplay)',fontSize:22,fontStyle:'italic'}}>{t('adminPanel')}</div>
+        {tab==='products' ? <button onClick={startNew} className="glass3" style={{width:40,height:40,borderRadius:20,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer'}}><I n="plus" w={18}/></button> : <div style={{width:40}}/>}
+      </div>
+
+      <div style={{display:'flex',gap:6,padding:'0 18px 16px'}}>
+        {tabs.map(tb=>(
+          <button key={tb.id} onClick={()=>setTab(tb.id)} className={tab===tb.id?'glass3':'glass'} style={{flex:1,padding:'10px',borderRadius:12,fontSize:12,textTransform:'uppercase',letterSpacing:'0.06em',cursor:'pointer',color:tab===tb.id?'var(--accent)':'var(--text2)',fontWeight:tab===tb.id?600:400,transition:'all .3s'}}>{tb.label}</button>
+        ))}
+      </div>
+
+      {tab==='products' && (
+        <div style={{padding:'0 18px',display:'flex',flexDirection:'column',gap:8}}>
+          {products.map(p=>(
+            <div key={p.id} className="glass-card" style={{borderRadius:'var(--radiusSm)',padding:10,display:'flex',gap:10,alignItems:'center'}}>
+              <img src={p.images[0]} style={{width:54,height:68,objectFit:'cover',borderRadius:10}}/>
+              <div style={{flex:1}}>
+                <div style={{fontSize:13,fontWeight:500}}>{p.name}</div>
+                <div style={{fontSize:11,color:'var(--text3)'}}>$ {p.price} · {t(p.category)} · Stock: {p.stock}</div>
+              </div>
+              <button onClick={()=>startEdit(p)} className="glass" style={{width:34,height:34,borderRadius:10,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer'}}><I n="edit" w={14}/></button>
+              <button onClick={()=>remove(p.id)} className="glass" style={{width:34,height:34,borderRadius:10,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer',color:'var(--danger)'}}><I n="trash" w={14}/></button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {tab==='config' && (
+        <div style={{padding:'0 18px',display:'flex',flexDirection:'column',gap:14}}>
+          <div className="glass2" style={{borderRadius:'var(--radius)',padding:16}}>
+            <div style={{fontSize:10,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--text3)',marginBottom:12}}>{t('social')}</div>
+            <div style={{display:'flex',flexDirection:'column',gap:10}}>
+              <div><div style={{fontSize:11,color:'var(--text3)',marginBottom:4}}>{t('whatsappNum')}</div><input className="glass-input" value={config.whatsappNumber} onChange={e=>setConfig({...config,whatsappNumber:e.target.value})} placeholder="855xxxxxxxxx"/></div>
+              <div><div style={{fontSize:11,color:'var(--text3)',marginBottom:4}}>{t('telegramBot')}</div><input className="glass-input" value={config.telegramBot} onChange={e=>setConfig({...config,telegramBot:e.target.value})} placeholder="123456:ABC..."/></div>
+              <div><div style={{fontSize:11,color:'var(--text3)',marginBottom:4}}>{t('telegramChat')}</div><input className="glass-input" value={config.telegramChatId} onChange={e=>setConfig({...config,telegramChatId:e.target.value})} placeholder="-100xxxxxxx"/></div>
+            </div>
+          </div>
+          <div className="glass2" style={{borderRadius:'var(--radius)',padding:16}}>
+            <div style={{fontSize:10,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--text3)',marginBottom:12}}>{t('exchangeRate')}</div>
+            <div style={{display:'flex',alignItems:'center',gap:8}}>
+              <span style={{fontSize:13}}>1 USD =</span>
+              <input className="glass-input" type="number" value={config.exchangeRate} onChange={e=>setConfig({...config,exchangeRate:+e.target.value||4100})} style={{width:100,textAlign:'center'}}/>
+              <span style={{fontSize:13}}>៛</span>
+            </div>
+          </div>
+          <div className="glass2" style={{borderRadius:'var(--radius)',padding:16}}>
+            <div style={{fontSize:10,textTransform:'uppercase',letterSpacing:'0.12em',color:'var(--text3)',marginBottom:12}}>Admin Password</div>
+            <input className="glass-input" type="password" value={config.adminPassword} onChange={e=>setConfig({...config,adminPassword:e.target.value})} placeholder="New password"/>
+          </div>
+        </div>
+      )}
+
+      {/* Edit/Add modal */}
+      {editing && (
+        <>
+          <div className="overlay" onClick={()=>setEditing(null)}></div>
+          <div className="modal glass2 slide-up scrollbar-hide">
+            <div className="modal-handle"></div>
+            <div style={{fontFamily:'var(--fontDisplay)',fontSize:20,fontStyle:'italic',marginBottom:16}}>{editing==='new'?t('addProduct'):t('editProduct')}</div>
+            <div style={{display:'flex',flexDirection:'column',gap:10}}>
+              <input className="glass-input" placeholder={t('name')+' (EN/FR)'} value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/>
+              <input className="glass-input khmer" placeholder={t('name')+' (ខ្មែរ)'} value={form.nameKm||''} onChange={e=>setForm({...form,nameKm:e.target.value})}/>
+              <input className="glass-input" type="number" placeholder={t('price')} value={form.price} onChange={e=>setForm({...form,price:e.target.value})}/>
+              <select className="glass-input" value={form.category} onChange={e=>setForm({...form,category:e.target.value})}>
+                <option value="women">{t('women')}</option>
+                <option value="men">{t('men')}</option>
+                <option value="accessories">{t('accessories')}</option>
+              </select>
+              <textarea className="glass-input" placeholder={t('images')} rows="3" value={form.images} onChange={e=>setForm({...form,images:e.target.value})} style={{resize:'none'}}/>
+              <input className="glass-input" placeholder={t('sizes')} value={form.sizes} onChange={e=>setForm({...form,sizes:e.target.value})}/>
+              <input className="glass-input" placeholder={t('colors')} value={form.colors||''} onChange={e=>setForm({...form,colors:e.target.value})}/>
+              <input className="glass-input" type="number" placeholder={t('stockQty')} value={form.stock} onChange={e=>setForm({...form,stock:e.target.value})}/>
+              <textarea className="glass-input" placeholder={t('description')} rows="3" value={form.description} onChange={e=>setForm({...form,description:e.target.value})} style={{resize:'none'}}/>
+              <label style={{display:'flex',alignItems:'center',gap:8,fontSize:13,cursor:'pointer'}}>
+                <input type="checkbox" checked={form.isNew} onChange={e=>setForm({...form,isNew:e.target.checked})} style={{accentColor:'var(--accent)'}}/>
+                {t('newTag')}
+              </label>
+            </div>
+            <div style={{display:'flex',gap:8,marginTop:16}}>
+              <button className="glass-btn-outline" onClick={()=>setEditing(null)} style={{flex:1}}>{t('cancel')}</button>
+              <button className="glass-btn" onClick={save} style={{flex:1}}>{t('save')}</button>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+/* ═══════════════════════ BOTTOM NAV ═══════════════════════ */
+const BottomNav = ({active, onChange}) => {
+  const { cart, t } = useApp();
+  const count = cart.reduce((s,i)=>s+i.qty, 0);
+  const tabs = [
+    {id:'shop', icon:'home', label:t('shop')},
+    {id:'search', icon:'search', label:t('search')},
+    {id:'favorites', icon:'heart', label:t('favorites')},
+    {id:'cart', icon:'bag', label:t('cart'), badge:count},
+    {id:'settings', icon:'gear', label:t('settings')},
+  ];
+  return (
+    <div className="bottom-nav glass2">
+      <div className="bottom-nav-inner">
+        {tabs.map(tb=>(
+          <div key={tb.id} className="nav-item" onClick={()=>onChange(tb.id)}>
+            {active===tb.id && <div className="nav-dot fade-in"></div>}
+            <div className="nav-icon" style={{position:'relative',color:active===tb.id?'var(--accent)':'var(--text3)'}}>
+              <I n={tb.icon} w={20} filled={active===tb.id && (tb.icon==='heart'||tb.icon==='home'||tb.icon==='bag')}/>
+              {tb.badge > 0 && <div className="badge">{tb.badge}</div>}
+            </div>
+            <div className="nav-label" style={{color:active===tb.id?'var(--accent)':'var(--text3)',fontWeight:active===tb.id?600:400}}>{tb.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+/* ═══════════════════════ MAIN APP ═══════════════════════ */
+const App = () => {
+  const { splashDone, lang, user } = useApp();
+  const [tab, setTab] = useState('shop');
+  const [selected, setSelected] = useState(null);
+  const [checkout, setCheckout] = useState(false);
+  const [admin, setAdmin] = useState(false);
+  const [showAuth, setShowAuth] = useState(false);
+
+  if(!splashDone) return <Splash/>;
+  if(!user && !showAuth) return <AuthView onDone={()=>{}}/>;
+  if(showAuth) return <AuthView onDone={()=>setShowAuth(false)}/>;
+  if(admin) return <AdminView onBack={()=>setAdmin(false)}/>;
+  if(checkout) return <CheckoutView onBack={()=>setCheckout(false)}/>;
+  if(selected) return <ProductDetail product={selected} onBack={()=>setSelected(null)}/>;
+
+  return (
+    <div style={{maxWidth:500,margin:'0 auto',minHeight:'100vh',position:'relative'}}>
+      <div className="ambient-orb orb1"></div>
+      <div className="ambient-orb orb2"></div>
+      <div style={{position:'relative',zIndex:2}}>
+        {tab==='shop' && <ShopView onSelect={setSelected} onAdmin={()=>setAdmin(true)}/>}
+        {tab==='search' && <SearchView onSelect={setSelected}/>}
+        {tab==='favorites' && <FavView onSelect={setSelected}/>}
+        {tab==='cart' && <CartViewComp onCheckout={()=>setCheckout(true)}/>}
+        {tab==='settings' && <SettingsView/>}
+      </div>
+      <BottomNav active={tab} onChange={setTab}/>
+    </div>
+  );
+};
+
+/* ═══════════════════════ RENDER ═══════════════════════ */
+ReactDOM.createRoot(document.getElementById('root')).render(<Store><App/></Store>);
+</script>
+</body>
+</html>
